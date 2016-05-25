@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+      
+<ui:composition template="templates/templatecommon.xhtml">
+	<ui:define name="titre">Confirmation panier</ui:define>
+	
+	<ui:define name="content">
+	
+		<div class="inline_block">
+		 	
+		 	<h:form id="form_tunnel" class="bloc_centre texte_centre">
+				<h1>Validez votre commande en 5 étapes</h1>
+				<p:steps activeIndex="0" styleClass="custom" readonly="false">
+			    <p:menuitem value="Panier" url="recapPanier.jsf"/>
+			    <p:menuitem value="Identification" url="identification.jsf"/>
+			    <p:menuitem value="Livraison" url="livraison.jsf"/>
+			    <p:menuitem value="Paiement" url="paiement.jsf"/>
+			    <p:menuitem value="Validation" url="validation.jsf"/>
+				</p:steps>
+			</h:form>
+			
+		
+			<h:form id="listesPanier" onkeypress="if (event.keyCode == 13) { return false; }">
+			 	<p:dataTable value="#{panierBean.lignesPanier}" rowIndexVar="index" var="lp" class="texte_centre bloc_centre panier_tableau" emptyMessage="Votre panier est vide">
+			 	<f:facet name="header">Contenu de mon panier</f:facet>
+			 		<p:column>
+			 			<f:facet name="header">Nom pièce</f:facet>
+			 			<h:outputText value="#{lp.piece.libelle}" />
+			 		</p:column>
+			 		<p:column id="refPiece">
+			 			<f:facet name="header">Référence</f:facet>
+			 			<h:outputText value="#{lp.piece.reference}" />
+			 		</p:column>
+			 		<p:column id="prixPiece">
+			 			<f:facet name="header">Prix unitaire</f:facet>
+			 			<h:outputText value="#{lp.piece.prix}" />
+			 		</p:column>
+			 		<p:column id="stockPiece">
+			 			<f:facet name="header">Stock</f:facet>
+			 			<h:outputText value="#{lp.piece.stock}" />
+			 		</p:column>
+			 		<p:column id="quantite">
+			 			<f:facet name="header">Quantité</f:facet>
+	        			<p:spinner id="minMax" value="#{lp.quantite}" size="1" min="0" max="#{lp.piece.stock}" maxlength="2">
+	        				<p:ajax update="listesPanier :panierValidation :form_menu:bouton_panier" listener="#{panierBean.verifStock(lp, lp.piece.stock)}"/>
+	        			</p:spinner>
+			 		</p:column>
+			 		<p:column id="prixTotalPiece">
+						<f:facet name="header">Total pièce</f:facet>
+						<h:outputText value="#{(lp.piece.prix)*(lp.quantite)}" />
+					</p:column>
+					<p:column id="supprimer">
+						<f:facet name="header">Supprimer</f:facet>
+						<p:commandButton  action="#{panierBean.supprimerLigne(lp)}" icon="ui-icon-trash" update="listesPanier :panierValidation :form_menu:bouton_panier"  />
+					</p:column>
+			 	</p:dataTable>
+	
+			 	<p:dataTable value="#{panierBean.montantTotal}" var="mt" class="texte_centre bloc_centre montantTotal_tableau" emptyMessage="0">
+					<p:column>
+			 			<f:facet name="header">Total</f:facet>
+			 			<h:outputText value="#{mt} HT" />
+			 		</p:column>
+				</p:dataTable>
+			</h:form>
+			
+			<h:form id="panierValidation" class="alignement_droit">
+			 	<p:commandButton rendered="#{utilisateurBean.utilisateur == null}" value="Continuer" action="identification" disabled="#{empty panierBean.lignesPanier}" />
+			 	<p:commandButton rendered="#{utilisateurBean.utilisateur != null}" value="Continuer" action="livraison" disabled="#{empty panierBean.lignesPanier}" />
+			</h:form>	
+		</div>
+	</ui:define>
+</ui:composition>
+</html>

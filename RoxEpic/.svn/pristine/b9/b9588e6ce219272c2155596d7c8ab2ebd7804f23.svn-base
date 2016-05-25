@@ -1,0 +1,416 @@
+package service;
+
+import java.util.Calendar;
+import java.util.List;
+import java.util.Set;
+
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
+
+import org.jboss.logging.Logger;
+
+import domain.catalogue.Categorie;
+import domain.achat.Commande;
+import domain.achat.LigneCommande;
+import domain.catalogue.Marque;
+import domain.catalogue.Modele;
+import domain.catalogue.Piece;
+import domain.catalogue.Type;
+import domain.client.Adresse;
+import domain.client.Utilisateur;
+import domain.dao.AdresseLocal;
+import domain.dao.CategorieLocal;
+import domain.dao.CommandeLocal;
+import domain.dao.LigneCommandeLocal;
+import domain.dao.MarqueLocal;
+import domain.dao.ModeleLocal;
+import domain.dao.PieceLocal;
+import domain.dao.TypeLocal;
+import domain.dao.UtilisateurLocal;
+
+@Stateless
+public class Service implements ServiceRemote, ServiceLocal {
+	
+	@EJB
+	private MarqueLocal marqueDAO;
+	@EJB
+	private TypeLocal typeDAO;
+	@EJB
+	private CategorieLocal categorieDAO;
+	@EJB
+	private ModeleLocal modeleDAO;
+	@EJB
+	private PieceLocal pieceDAO;
+	@EJB
+	private LigneCommandeLocal ligneCommandeDAO;
+	@EJB
+	private CommandeLocal commandeDAO;
+	@EJB
+	private UtilisateurLocal utilisateurDAO;
+	@EJB
+	private AdresseLocal adresseDAO;
+		
+	private final static Logger logger = Logger.getLogger(Service.class);
+	
+	
+	/*-----------------------------------------------Marque-----------------------------------------------*/
+	
+	@Override
+	public List<Marque> getAllMarques() throws ServiceException {
+		List<Marque> listMarque=null;
+		try {
+			listMarque=marqueDAO.getAll();
+		} catch (Exception e) {
+			throw new ServiceException("Database Marque : GetAll Error");
+		}
+		return listMarque;
+	}
+	
+	@Override
+	public Marque insert(Marque ma) throws ServiceException {
+		Marque marque=null;
+		try {
+			marque=marqueDAO.insert(ma);
+			logger.error("marque successfull insert");
+		} catch (Exception e) {
+			logger.error("logger error : marque failed insert");
+			throw new ServiceException("Database Marque : Insert Error");
+		}
+		return marque;
+	}
+	
+	@Override
+	public Marque delete(Marque ma) throws ServiceException {
+		try {
+			marqueDAO.delete(ma);
+		} catch (Exception e) {
+			throw new ServiceException("Database Marque : Delete Error");
+		}		
+		return ma;
+	}
+	
+	
+	/*-------------------------------------------------Type------------------------------------------*/
+	
+	@Override
+	public List<Type> getAllTypes() throws ServiceException {
+		List<Type> listType=null;
+		try {
+			listType=typeDAO.getAll();
+		} catch (Exception e) {
+			throw new ServiceException("Database Type : GetAll Error");
+		}
+		return listType;
+	}
+	
+	@Override
+	public Type insert(Type ty) throws ServiceException {
+		Type type=null;
+		try {
+			type=typeDAO.insert(ty);
+			logger.error("type successfull insert");
+		} catch (Exception e) {
+			logger.error("logger error : type failed insert");
+			throw new ServiceException("Database Type : Insert Error");
+		}
+		return type;
+	}
+	@Override
+	public Type delete(Type ty) throws ServiceException {
+		try {
+			typeDAO.delete(ty);
+		} catch (Exception e) {
+			throw new ServiceException("Database Type : Delete Error");
+		}		
+		return ty;
+	}
+	
+	
+	/*------------------------------------------Categorie---------------------------------------------*/
+	
+	@Override
+	public List<Categorie> getAllCategories() throws ServiceException {
+		List<Categorie> listCategorie=null;
+		try {
+			listCategorie=categorieDAO.getAll();
+		} catch (Exception e) {
+			throw new ServiceException("Database Categorie : GetAll Error");
+		}
+		return listCategorie;
+	}
+	
+	@Override
+	public Categorie insert(Categorie ca) throws ServiceException {
+		Categorie categorie=null;
+		try {
+			categorie=categorieDAO.insert(ca);
+			logger.error("categorie successfull insert");
+		} catch (Exception e) {
+			logger.error("logger error : categorie failed insert");
+			throw new ServiceException("Database Categorie : Insert Error");
+		}
+		return categorie;
+	}
+	
+	@Override
+	public Categorie delete(Categorie ca) throws ServiceException {
+		try {
+			categorieDAO.delete(ca);
+		} catch (Exception e) {
+			throw new ServiceException("Database Categorie : Delete Error");
+		}		
+		return ca;
+	}
+	
+	/*--------------------------------------------Modele----------------------------------------*/
+	
+	public List<Modele> getModeleByTypeMarque(Marque ma,Type ty) throws ServiceException{
+		List<Modele> lm=null;
+		try {
+			lm=modeleDAO.getBy(ma, ty);
+		} catch (Exception e) {
+			logger.error("logger error : Modele failed getBy");
+			throw new ServiceException("Database Modele : GetBy Error");
+		}
+		return lm;
+	}
+	
+	/*--------------------------------------Piece--------------------------------------------*/
+	
+	public void associe (Piece piOrigine, Modele mo) throws ServiceException{
+		try{
+			pieceDAO.associe(piOrigine, mo);
+		} catch(Exception e){
+			logger.error("logger error : Piece failed getByOriginale");
+			throw new ServiceException(e.getMessage());
+		}
+		
+	}
+	public List<Piece> getOriginalesBy(Modele mo, Categorie ca) throws ServiceException{
+		List<Piece> lp=null;
+		try{
+			lp=pieceDAO.getOriginalesBy(mo, ca);
+		} catch(Exception e){
+			logger.error("logger error : Piece failed getByOriginale");
+			throw new ServiceException(e.getMessage());
+		}
+		return lp;
+		
+	}
+	public List<Piece> getEquivalentesBy(Modele mo, Categorie ca) throws ServiceException{
+		List<Piece> lp=null;
+		try{
+			lp=pieceDAO.getEquivalentesBy(mo, ca);
+		} catch(Exception e){
+			logger.error("logger error : Piece failed getByEquivalente");
+			throw new ServiceException(e.getMessage());
+		}
+		return lp;
+	}
+	public List<Piece> getPieceByCat(Categorie ca) throws ServiceException{
+		List<Piece> lp=null;
+		try{
+			lp=pieceDAO.getByCat(ca);
+		} catch(Exception e){
+			logger.error("logger error : Piece failed getByCat");
+			throw new ServiceException(e.getMessage());
+		}
+		return lp;
+	}	
+	public Piece getPieceById(int pieceId) throws ServiceException{
+		Piece pi=null;
+		try{
+			pi=pieceDAO.getById(pieceId);
+		} catch(Exception e){
+			logger.error("logger error : Piece failed getById)");
+			throw new ServiceException(e.getMessage());
+		}
+		return pi;
+	}
+	
+	
+	/*--------------------------------------LigneDeCommande--------------------------------------------*/
+	
+	@Override
+	public List<LigneCommande> getByCom(Commande co) throws ServiceException {
+		List<LigneCommande> listLigneCom=null;
+		try {
+			listLigneCom=ligneCommandeDAO.getByCom(co);
+		} catch (Exception e) {
+			throw new ServiceException("Database LigneCommande : GetByCom Error");
+		}
+		return listLigneCom;
+	}
+	
+	@Override
+	public LigneCommande insert(LigneCommande ligneCom) throws ServiceException {
+		LigneCommande ligneCommande=null;
+		try {
+			ligneCommande=ligneCommandeDAO.insert(ligneCom);
+		} catch (Exception e) {
+			logger.error("logger error : LigneCommande failed insert");
+			throw new ServiceException("Database LigneCommande : Insert Error : " + e.getMessage());
+		}
+		return ligneCommande;
+	}
+	
+	@Override
+	public LigneCommande insertLignePanier (Piece p, Commande c, int quantite) throws ServiceException{
+		LigneCommande lc = null;
+		try{
+			//LigneCommandePK lcpk= new LigneCommandePK(c, p);
+			lc= new LigneCommande(c, p, quantite, p.getPrix());
+		} catch (Exception e) {
+			throw new ServiceException("LignePanier : Create Error");
+		}	
+		return lc;
+	}
+	
+	@Override
+	public void deleteLigneCommande(LigneCommande ligneCom) throws ServiceException {
+		try {
+			ligneCommandeDAO.delete(ligneCom);
+		} catch (Exception e) {
+			throw new ServiceException("Database LigneCommande : Delete Error");
+		}		
+	}
+	
+	
+/*--------------------------------------Commande--------------------------------------------*/
+	
+	@Override
+	public List<Commande> getAll() throws ServiceException {
+		List<Commande> lc=null;
+		try {
+			lc=commandeDAO.getAll();
+		} catch (Exception e) {
+			throw new ServiceException("Database Commande : GetAll Error");
+		}
+		return lc;
+	}
+	
+	@Override
+	public Commande insert(Commande co) throws ServiceException {
+		Commande commande=null;
+		try {
+			commande=commandeDAO.insert(co);
+		} catch (Exception e) {
+			logger.error("logger error : Commande failed insert");
+			throw new ServiceException("Database Commande : Insert Error");
+		}
+		return commande;
+	}
+	
+	@Override
+	public void deleteCommande(Commande co) throws ServiceException {
+		try {
+			commandeDAO.delete(co);
+		} catch (Exception e) {
+			logger.error("logger error : Commande failed delete");
+			throw new ServiceException("Database Commande : Delete Error");
+		}		
+	}
+	
+	@Override
+	public Commande insertPanier (Adresse a, Utilisateur u, int montantTotal, Calendar date) throws ServiceException{
+		Commande c=null;
+		try{
+			c= new Commande(a, u, montantTotal, date);
+		} catch (Exception e) {
+			throw new ServiceException("Panier : Create Error");
+		}
+		return c;
+	}
+	
+	
+	/*----------------------------------------------Utilisateur----------------------------------------*/
+
+
+	@Override
+	public Utilisateur insert(Utilisateur util) throws ServiceException {
+		Utilisateur u = null;
+		try{
+			u=utilisateurDAO.insert(util);
+		}
+		catch(Exception e){
+			logger.error("logger error : Utilisateur failed insert");
+			throw new ServiceException(e.getMessage());
+		}
+		return u;
+	}
+
+	@Override
+	public Utilisateur identifier(String identifiant, String motDePasse) throws ServiceException {
+		Utilisateur u = null;
+		try{
+			u=utilisateurDAO.identifier(identifiant, motDePasse);
+		}
+		catch(Exception e){
+			logger.error("logger error : Utilisateur failed identifier");
+			throw new ServiceException(e.getMessage());
+		}
+		return u;
+	}
+	
+	@Override
+	public void deleteUtilisateur (Utilisateur util) throws ServiceException{
+		try{
+			utilisateurDAO.delete(util);
+		}
+		catch(Exception e){
+			logger.error("logger error : Utilisateur failed delete");
+			throw new ServiceException(e.getMessage());
+		}
+	}
+	
+	@Override
+	public Set<Adresse> adresseGetByUtilisateur (Utilisateur util) throws ServiceException{
+		Set<Adresse> adresses=null;
+		try{
+			adresses = utilisateurDAO.adressesGetByUtilisateur(util);
+		}
+		catch(Exception e){
+			logger.error("logger error : Utilisateur failed getAdresses");
+			throw new ServiceException(e.getMessage());
+		}
+		return adresses;
+	}
+	
+	
+	/*----------------------------------------------Adresse----------------------------------------*/
+	
+	public Adresse insertAdresse (Adresse a) throws ServiceException{
+		Adresse ad=null;
+		try{
+			ad=adresseDAO.insert(a);
+		}
+		catch(Exception e){
+			logger.error("logger error : Adresse failed insert");
+			throw new ServiceException(e.getMessage());
+		}
+		return ad;
+	}
+	
+	public void deleteAdresse (Adresse a) throws ServiceException{
+		try {
+			adresseDAO.deleteAdresse(a);
+		} catch (Exception e) {
+			logger.error("logger error : Adresse failed delete");
+			throw new ServiceException(e.getMessage());
+		}
+	}
+	
+	public Adresse getAdresseById (int adresseId) throws ServiceException{
+		Adresse ad=null;
+		try{
+			ad=adresseDAO.getById(adresseId);
+		} catch(Exception e){
+			logger.error("logger error : Adresse failed getById)");
+			throw new ServiceException(e.getMessage());
+		}
+		return ad;
+	}
+	
+	
+	
+}

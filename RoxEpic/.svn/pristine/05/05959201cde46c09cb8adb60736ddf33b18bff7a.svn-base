@@ -1,0 +1,77 @@
+package domain.dao;
+
+import javax.ejb.EJBException;
+import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+
+import domain.client.Adresse;
+import domain.client.Utilisateur;
+
+
+@Stateless
+public class AdresseDAO implements AdresseLocal{
+	
+	@PersistenceContext(unitName="RoxEpic")
+	EntityManager em;
+
+	@Override
+	public Adresse insert(Adresse a) throws EJBException {
+		try{
+			em.persist(a);
+		}
+		catch(EJBException e){
+			throw new EJBException (e.getMessage());
+		}
+		return a;
+	}
+	
+	@Override
+	public void deleteAdresse (Adresse a) throws Exception{
+		Adresse ad= new Adresse();
+		try{
+//			ad=em.find(Adresse.class, a.getId());
+//			ad=em.merge(a);
+			System.out.println("DAO id "+a.getId());
+//			em.remove(ad);
+//			em.flush();
+			em.remove(em.merge(a));
+			System.out.println(a.getId());
+			System.out.println(a.getLibelle());
+		}
+		catch(Exception e){
+			throw new Exception("L'adresse n'existe pas");
+		}
+	}
+	
+	@Override
+	public void deleteAdresseById (int adresseId) throws Exception{
+		try{
+			System.out.println(adresseId);
+			Query q = em.createQuery("DELETE FROM Adresse a WHERE a.id_adresse= :param1");
+			q.setParameter("param1",adresseId);
+			q.executeUpdate();
+		}
+		catch(Exception e){
+			throw new Exception("L'adresse n'existe pas");
+		}
+	}
+	
+	@Override
+	public void modifierAdresse(Adresse a) throws Exception {			
+		try{
+			em.merge(a);
+		}
+		catch(EJBException e){
+			throw new EJBException (e.getMessage());
+		}		
+	}
+	
+	@Override
+	public Adresse getById (int adresseId) throws Exception{
+		return em.find(Adresse.class, adresseId);
+	}
+	
+	
+}

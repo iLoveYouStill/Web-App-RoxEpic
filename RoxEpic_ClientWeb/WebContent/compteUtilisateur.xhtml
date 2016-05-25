@@ -1,0 +1,218 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition template="templates/templatecommon.xhtml">
+	<ui:define name="titre">Recherche</ui:define>
+	
+	<ui:define name="content">
+ 	
+ 		<p:tabView id="cmp_util">
+	        <p:tab title="Utilisateur">
+		        <h:outputText class="titre_utilisateur" value="Informations de Compte"/><br/><br/>
+		        	<h:form id="panel_cmp">
+			            <h:panelGrid columns="3" cellpadding="5">	
+			            					                                 
+			                						                							
+							<h:outputText value="Nom"/>										
+							<p:inputText id="nom" value="#{utilisateurBean.nom}" required="true" 
+							requiredMessage="Veuillez renseigner votre nom" validatorMessage="Nom invalide" label="Nom">						
+								<f:validateLength minimum="3" maximum="20"/>
+								<f:validateRegex pattern="([A-Za-zzéèêïëî -]*)"/>
+								<p:ajax update="cmp_util:panel_cmp:messNom" event="keyup" />			
+							</p:inputText>
+							<p:message id="messNom" for="nom" errorStyle="color:blue" />											
+							
+							<h:outputText value="Prénom"/>
+							<p:inputText id="prenom" value="#{utilisateurBean.prenom}" required="true"
+							requiredMessage="Veuillez renseigner votre prénom" validatorMessage="Prénom invalide" label="Prénom">						
+								<f:validateLength minimum="3" maximum="20"/>
+								<f:validateRegex pattern="([A-Za-zzéèêïëî -]*)"/>
+								<p:ajax update="cmp_util:panel_cmp:messPrenom" event="keyup" />			
+							</p:inputText>
+							<p:message id="messPrenom" for="prenom" errorStyle="color:blue" />
+							
+							<h:outputText value="Mot de passe"/>
+							<p:password id="motDePasse" value="#{utilisateurBean.motDePasse}" required="true"
+							requiredMessage="Veuillez renseigner votre mot de passe" validatorMessage="Mot de passe invalide" label="Mot de passe">						
+								<f:validateLength minimum="4" maximum="20"/>
+								<f:validateRegex pattern="([A-Za-z0-9zéèêïëî -]*)"/>
+								<p:ajax update="cmp_util:panel_cmp:messPass" event="keyup" />			
+							</p:password>
+							<p:message id="messPass" for="motDePasse" errorStyle="color:blue" />
+							
+							<h:outputText value="E-mail"/>
+							<p:inputText id="email" value="#{utilisateurBean.email}" required="true"
+							requiredMessage="Veuillez renseigner votre e-mail" validatorMessage="E-mail invalide" label="E-mail">						
+								<f:validateLength minimum="3" maximum="30"/>
+								<f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"/>
+								<p:ajax update="cmp_util:panel_cmp:messEmail" event="keyup" />			
+							</p:inputText>
+							<p:message id="messEmail" for="email" errorStyle="color:blue" />
+							
+							<h:outputText value="Téléphone"/>
+							<p:inputText id="telephone" value="#{utilisateurBean.telephone}" required="true"
+							requiredMessage="Veuillez renseigner votre téléphone" validatorMessage="Numéro invalide" label="Téléphone">						
+								<f:validateLength minimum="9" maximum="10"/>
+								<!-- <f:validateRegex pattern="[0-9]*"/> -->
+								<p:ajax update="cmp_util:panel_cmp:messTel" event="keyup" />			
+							</p:inputText>
+							<p:message id="messTel" for="telephone" errorStyle="color:blue" />
+																
+			            </h:panelGrid>
+			            
+			            <br/><p:commandButton actionListener="#{utilisateurBean.save}" action="#{utilisateurBean.modifierUtilisateur}" 
+			            value="Modifier mes informations personnelles" update="cmp_util:panel_cmp" icon="ui-icon-check"/>
+			            <p:messages/>
+			         </h:form>
+		         
+	        </p:tab>
+	        
+	        <p:tab title="Adresses">
+	        	<h:outputText class="titre_utilisateur" value="Adresse"/><br/><br/>
+	        		        			        	
+        		<h:form id="panel_ad">	        			
+		            <h:panelGrid columns="3" cellpadding="5">							           						            				            										
+						<h:outputText value="Libellé de l'adresse"/>
+						<p:inputText id="libelle" value="#{adresseBean.libelle}" required="true"
+						requiredMessage="Veuillez renseigner l'intitulé de l'adresse. Exemple : Maison" validatorMessage="Libellé invalide" label="Libellé de l'adresse">						
+							<f:validateLength minimum="3" maximum="20"/>
+							<f:validateRegex pattern="([A-Za-z0-9éèêïëî -]*)"/>
+							<p:ajax update="cmp_util:panel_ad:messLib" event="keyup" />			
+						</p:inputText>
+						<p:message id="messLib" for="libelle" errorStyle="color:blue" />
+						
+						<h:outputText value="N° et nom de rue"/>
+						<p:inputText id="rue" value="#{adresseBean.rue}" required="true" 
+						requiredMessage="Veuillez renseigner le numéro du domicile et le nom de la rue"  validatorMessage="N° et nom de rue invalides" label="N° et nom de rue">						
+							<f:validateLength minimum="3" maximum="20"/>
+							<f:validateRegex pattern="([0-9]+[A-Za-zéèêïëî -]*)"/>
+							<p:ajax update="cmp_util:panel_ad:messRue" event="keyup" />			
+						</p:inputText>
+						<p:message id="messRue" for="rue" errorStyle="color:blue" />
+						
+						<h:outputText value="Complément d'adresse"/>
+						<p:inputText id="complement" value="#{adresseBean.complement}" required="true" 
+						requiredMessage="Veuillez renseigner votre complément d'adresse" validatorMessage="Complément d'adresse invalide" label="Complément d'adresse">						
+							<f:validateLength minimum="1" maximum="20"/>
+							<f:validateRegex pattern="([A-Za-z0-9éèêïëî -]*)"/>
+							<p:ajax update="cmp_util:panel_ad:messComp" event="keyup" />			
+						</p:inputText>
+						<p:message id="messComp" for="complement" errorStyle="color:blue" />
+						
+						<h:outputText value="Code Postal"/>
+						<p:inputText id="codePostal" value="#{adresseBean.codePostal}" required="true"
+						 requiredMessage="Veuillez renseigner votre code postal" validatorMessage="Code postal invalide" label="Code Postal">						
+							<f:validateLength minimum="4" maximum="5"/>
+							<!-- <f:validateRegex pattern="[0-9]*"/> -->
+							<p:ajax update="cmp_util:panel_ad:messCoPo" event="keyup" />			
+						</p:inputText>
+						<p:message id="messCoPo" for="codePostal" errorStyle="color:blue" />
+						
+						<h:outputText value="Ville"/>
+						<p:inputText id="ville" value="#{adresseBean.ville}" required="true" 
+						requiredMessage="Veuillez renseigner votre ville" validatorMessage="Ville invalide" label="Ville">						
+							<f:validateLength minimum="3" maximum="20"/>
+							<f:validateRegex pattern="([A-Za-zéèêïëî -]*)"/>
+							<p:ajax update="cmp_util:panel_ad:messVil" event="keyup" />			
+						</p:inputText>
+						<p:message id="messVil" for="ville" errorStyle="color:blue" />
+						
+						<h:outputText value="Pays"/>
+						<p:inputText id="pays" value="#{adresseBean.pays}" required="true" 
+						requiredMessage="Veuillez renseigner votre pays" validatorMessage="Pays invalide" label="Pays">						
+							<f:validateLength minimum="3" maximum="20"/>
+							<f:validateRegex pattern="([A-Za-zéèêïëî -]*)"/>
+							<p:ajax update="cmp_util:panel_ad:messPay" event="keyup" />			
+						</p:inputText>
+						<p:message id="messPay" for="pays" errorStyle="color:blue" />    
+						                
+		            </h:panelGrid>	
+		            <br/>		   		            			   	    	            		
+	           		<p:commandLink rendered="#{not empty adresseBean.libelle}" action="#{adresseBean.ajouterAdresse}" value="Je veux ajouter une adresse !" update="panel_ad"/>
+	           		<br/><br/>												
+					<h:outputText class="titre_utilisateur" value="Liste d'adresses"/><br/><br/>
+			   
+			    	<h:selectOneMenu id="id_adresse" value="#{adresseBean.idAdresse}" >	            		
+	            		<!-- <f:selectItem itemLabel="Choisir une adresse" itemValue=""/> -->
+						<f:selectItems value="#{adresseBean.listAdresses}" var="adr" itemLabel="#{adr.libelle}" itemValue="#{adr.id}"  />
+			            <p:ajax listener="#{adresseBean.afficherAdresse}" update="panel_ad"/>								         
+					</h:selectOneMenu>
+			        							        	
+			        &nbsp;<p:commandButton rendered="#{empty adresseBean.libelle}" actionListener="#{adresseBean.save}" action="#{adresseBean.ajouterByUtilisateur()}" 
+			        value="Ajouter une adresse" update="panel_ad" icon="ui-icon-check"/>
+			        &nbsp;<p:commandButton rendered="#{not empty adresseBean.libelle}" actionListener="#{adresseBean.save}" action="#{adresseBean.modifier}" 
+			        value="Modifier cette adresse" update="panel_ad" icon="ui-icon-check"/>
+					&nbsp;<p:commandButton rendered="#{not empty adresseBean.libelle}" actionListener="#{adresseBean.save}" action="#{adresseBean.supprimer()}" 
+					value="Supprimer cette adresse" update="panel_ad" icon="ui-icon-check"/>
+			    	<p:messages/>
+			    	
+			    </h:form>
+	        </p:tab>
+	        
+	        <p:tab title="Commandes">
+	        	<h:form id="panel_cmd">	            
+				 	<p:dataTable value="#{commandeBean.listCommandes}" var="cmd" type="unordered" itemType="none" paginator="true" rows="10" styleClass="paginated">				 		        
+				        <p:column>
+				            <f:facet name="header">
+				                <h:outputText value="Date" />
+				            </f:facet>
+				            <h:outputText value="#{cmd.date}" style="margin-left:40%"/>
+				        </p:column>		 
+				        <p:column>
+				            <f:facet name="header">
+				                <h:outputText value="Montant"/>
+				            </f:facet>
+				            <h:outputText value="#{cmd.montantTotal} €" style="margin-left:45%"/>
+				        </p:column>
+				        <p:column>
+				            <f:facet name="header">
+				                <h:outputText value="Afficher" />
+				            </f:facet>
+				            <p:commandLink update="cmp_util:panel_cmd:cmdDetail" oncomplete="PF('cmdDialog').show()" title="View Detail" styleClass="ui-icon ui-icon-search inline_block" 
+					        actionListener="#{commandeBean.getLignesDeCoByUtilisateur(cmd)}" style="margin-left:48%"/>
+				        </p:column>	        
+				    </p:dataTable>
+
+				    <p:dialog header="Détail de votre commande du #{commandeBean.commande.date} &nbsp;&nbsp;&nbsp;&nbsp; - &nbsp;&nbs;&nbsp;&nbsp; Montant total = #{commandeBean.commande.montantTotal} €" 
+				    	widgetVar="cmdDialog" modal="true" showEffect="clip" hideEffect="clip" resizable="false">
+				        <p:outputPanel id="cmdDetail" style="text-align:left">
+				
+				            <p:dataTable value="#{commandeBean.lignesPanier}" var="ligne" type="ordered" rendered="#{commandeBean.commande != null}">
+				            	<p:column headerText="Pièce">
+							        <h:outputText value="#{ligne.piece}" />
+							    </p:column>
+							 
+							    <p:column headerText="Quantité">
+							        <h:outputText value="#{ligne.quantite}" />
+							    </p:column>
+							 
+							    <p:column headerText="Prix">
+							        <h:outputText value="#{ligne.prixUnitaire} €" />
+							    </p:column>
+				            </p:dataTable>
+				        </p:outputPanel>
+				    </p:dialog>
+				    
+				   <!-- <p:treeTable value="#{commandeBean.root}" var="node">		        				      
+				        <p:column headerText="Date">
+				            <h:outputText value="#{node.date}" />
+				        </p:column>
+				        <p:column headerText="Montant">
+				            <h:outputText value="#{node.montantTotal}" />
+				        </p:column>				       
+				    </p:treeTable>  -->
+				    
+				</h:form>
+	        </p:tab>
+	        
+	    </p:tabView>
+
+	</ui:define>
+</ui:composition>
+</html>		    

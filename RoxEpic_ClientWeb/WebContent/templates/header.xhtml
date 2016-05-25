@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+<body>
+	<ui:composition>
+		<p:graphicImage styleClass="banniere" name="images/banniere_roxepic.jpg"  />
+		<p:growl id="message" showDetail="true" autoUpdate="true"/>
+		<h:form id="form_menu">
+		    <p:menubar>
+		    	<p:menuitem value="Rechercher des pièces" url="recherche.jsf" icon="ui-icon-search" />
+		        <f:facet name="options">
+				        <div id="form_identification">
+				        	<h:panelGroup rendered="#{utilisateurBean.utilisateur == null}">
+					            <p:inputText placeholder="Identifiant" size="15" styleClass="input_menu" value="#{utilisateurBean.email}" required="true"/>
+					            <p:password placeholder="Mot de passe" size="15" styleClass="input_menu" value="#{utilisateurBean.motDePasse}" required="true"/>
+					            <p:commandButton value="Connexion" icon="ui-icon-extlink" action="#{utilisateurBean.identifier(1)}" update="form_menu" />
+					            <p:button value="S'enregistrer" icon="ui-icon-key" onclick="#{utilisateurBean.definePageDep(1)}" href="creationUtilisateur.jsf" />
+				             </h:panelGroup>
+				             <h:panelGroup rendered="#{utilisateurBean.utilisateur != null}">
+			        			<h:outputText value="#{utilisateurBean.utilisateur.nom} #{utilisateurBean.utilisateur.prenom}("/>
+			        			<p:commandLink value="déconnexion" action="#{utilisateurBean.deconnecter}" />
+			        			<h:outputText value=") "/>
+			        			<p:button href="compteUtilisateur.jsf" value="Mon compte" icon="ui-icon-person"/>
+			        		</h:panelGroup>
+			        		<p:button id="bouton_panier" value="Panier(#{panierBean.nbreLignes})" href="recapPanier.jsf" icon="ui-icon-cart" />
+				        </div>
+		        </f:facet>
+		    </p:menubar>
+		</h:form>
+	</ui:composition>
+</body>
+</html>

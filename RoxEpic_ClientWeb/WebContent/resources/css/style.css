@@ -1,0 +1,207 @@
+/* Styles personnalisés */
+
+#global {
+	width:90%;
+}
+
+#content {
+	min-height:350px;
+	background: #c4c4c4 -moz-linear-gradient(center top , rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0)) repeat scroll 0 0;
+	border-radius: 3px;
+	border: 1px solid #a8a8a8;
+	color: #4f4f4f;
+	margin: 10px 0 10px 0;
+	padding: 10px;
+}
+
+#barre_laterale {
+	width:25%;
+	margin:10px;
+	margin-right:20px;
+	vertical-align:middle;
+}
+
+#barre_laterale .ui-selectonemenu {
+	display:block;
+}
+
+#resultats {
+	width:70%;
+}
+
+.inline_block {
+	display:inline-block;
+	vertical-align: top;
+}
+.bloc_centre {
+	margin: 0 auto;
+}
+
+.tableau {
+	width:50%;
+	margin-bottom:10px;
+}
+
+.texte_centre {
+	text-align:center;
+}
+
+.input_menu {
+	margin-right:5px;
+}
+
+#form_tunnel {
+	width:91%;
+	margin-bottom : 80px;
+}
+
+.livraison {
+	width:46%;
+	height:500px;
+}
+
+.alignement_droit {
+	position:relative;
+	left:86.9%;
+	margin-top:10px;
+}
+
+.alignement_droit_bis {
+	position:relative;
+	left:85.8%;
+	margin-top:10px;
+}
+
+.montantTotal_tableau {
+	width:15%;
+	position:relative;
+	left:37.5%;
+	margin-top:10px;
+}
+
+.panier_tableau {
+	width:90%;
+}
+
+.moyens_paiement {
+	width:20%;
+}
+
+.moyenPaiementPanel {
+	margin-bottom:20px;
+}
+
+.moyenPaiementButton {
+	margin-top:20px;
+	display:block;
+	margin:0 auto;
+}
+
+.banniere {
+	/*border-radius*/
+	width:100%;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    background-color: #cdcdcd;
+}
+
+/* Rédéfinition de certaines classes PrimeFaces */
+
+.ui-datatable-header {
+	margin: 0 auto;
+	margin-top:10px;
+	margin-bottom:10px;
+	width: 50%;
+}
+
+.centeredMenuBar.ui-menubar {
+    text-align: center;
+}
+
+.centeredMenuBar .ui-menu-list {
+    display: inline-block;
+}
+
+.ui-menu .ui-separator { 
+   background: #A8A8A8; 
+   border: none; 
+   width: 1px; 
+   clear: none; 
+   height: 22px; 
+   margin: 4px 6px 0; 
+   box-shadow: none; 
+}
+
+.ui-steps .ui-steps-item {
+    width: 19%;
+    margin:5px;
+}
+ 
+.ui-state-highlight {
+    text-shadow: none !important;
+}
+ 
+.ui-steps.custom {
+    margin-bottom: 30px;
+}
+ 
+.ui-steps.custom .ui-steps-item .ui-menuitem-link {
+    height: 10px;
+    padding: 0 1em;
+}
+ 
+.ui-steps.custom .ui-steps-item .ui-steps-number {
+    background-color: #0081c2;
+    color: #FFFFFF;
+    display: inline-block;
+    width: 30px;
+    border-radius: 10px;
+    margin-top: -10px;
+    margin-bottom: 10px;
+}
+
+.ui-state-highlight a, .ui-widget-content .ui-state-highlight a, .ui-widget-header .ui-state-highlight a {
+  color: black;
+}
+
+.ui-state-default a, .ui-state-default a:link, .ui-state-default a:visited {
+  color: gray;
+}
+
+#cmp_util .ui-state-default a, #cmp_util.ui-state-default a:link, #cmp_util .ui-state-default a:visited {
+  color: white;
+}
+
+.ui-growl {
+    top:14%;
+    left:40%;
+}
+
+.ui-effects-transfer { 
+ 	
+ 	background-image: url(../images/panier.jpg);
+ 	/*
+ 	border: 2px dotted grey; 
+ 	background-color: white;
+	moz-opacity:0.5;
+	opacity: 0.5;
+	filter:alpha(opacity=50);*/
+ }
+
+/***********************************/
+
+.titre_utilisateur {
+	font-family: ahoma, Geneva, Kalimati, sans-serif;
+	font-size: 100%;
+	font-weight : bold;
+	text-align: center;
+}
+
+#block_adresse {
+	display: inline-block;
+    width: 33%;
+    margin: 5%;
+    vertical-align: top;
+    text-align: right;
+}

@@ -1,0 +1,29 @@
+package domain.dao;
+
+import java.util.List;
+
+import javax.ejb.Local;
+
+import service.ServiceException;
+import domain.catalogue.Marque;
+
+@Local
+public interface MarqueLocal {
+	/**
+	 * retourne toutes les marques de la base de données
+	 * @return une liste de marques
+	 * @throws BDDException en cas d'erreur d'insertion
+	 */
+	public abstract List<Marque> getAll() throws ServiceException;
+	
+	/**
+	 * @param marque
+	 * @return résultat de la requête
+	 * @throws BDDException
+	 */	
+	public abstract Marque insert(Marque marque) throws ServiceException;
+	
+	public abstract Marque delete(Marque marque) throws ServiceException;
+	
+	
+}

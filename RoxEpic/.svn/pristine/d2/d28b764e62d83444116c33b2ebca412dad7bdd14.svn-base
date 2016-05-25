@@ -1,0 +1,68 @@
+package domain.dao;
+
+
+
+import javax.ejb.EJBException;
+import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+
+
+
+import org.jboss.logging.Logger;
+
+import service.Service;
+import domain.client.Utilisateur;
+
+
+@Stateless
+public class UtilisateurDAO implements UtilisateurLocal {
+	
+	private final static Logger logger = Logger.getLogger(Service.class);
+	
+	@PersistenceContext(unitName="RoxEpic")
+	EntityManager em;
+
+	@Override
+	public Utilisateur insert(Utilisateur u) throws EJBException {
+		try{
+			logger.info(u);
+			em.persist(u);
+			
+		}
+		catch(EJBException e){
+			throw new EJBException (e.getMessage());
+		}
+		return u;
+	}
+	
+	@Override
+	public void delete(Utilisateur u) throws Exception {
+		Utilisateur util= new Utilisateur();
+		try{
+			util=em.find(Utilisateur.class, u.getId());
+			em.remove(util);
+		}
+		catch(Exception e){
+			throw new Exception("L'utilisateur n'existe pas");
+		}
+		
+	}
+
+	@Override
+	public Utilisateur identifier(Utilisateur util) throws Exception {
+		try{
+			Query q= em.createQuery("SELECT u FROM Utilisateur u WHERE u= :param");
+			q.setParameter("param",util);
+			util=(Utilisateur)q.getSingleResult();
+		}
+		catch(Exception e){
+			throw new Exception(e.getMessage());
+		}
+		return util;
+	}
+
+	
+
+}

@@ -1,0 +1,52 @@
+package domain.catalogue;
+
+import java.io.Serializable;
+import javax.persistence.*;
+
+
+/**
+ * The persistent class for the categorie database table.
+ * 
+ */
+@Entity
+@Table(name="categorie")
+public class Categorie implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="id_categorie")
+	private int idCategorie;
+
+	@Column(name="libelle")
+	private String libelleCategorie;
+
+	public Categorie() {
+	}
+
+	public Categorie(String libelleCategorie) {
+    	this.libelleCategorie = libelleCategorie;	
+    }
+	
+	public Categorie(int idCategorie, String libelleCategorie) {
+    	this.libelleCategorie = libelleCategorie;	
+    	this.idCategorie = idCategorie;
+    }
+	
+	public int getIdCategorie() {
+		return this.idCategorie;
+	}
+
+	public void setIdCategorie(int idCategorie) {
+		this.idCategorie = idCategorie;
+	}
+
+	public String getLibelleCategorie() {
+		return this.libelleCategorie;
+	}
+
+	public void setLibelleCategorie(String libelleCategorie) {
+		this.libelleCategorie = libelleCategorie;
+	}
+
+}

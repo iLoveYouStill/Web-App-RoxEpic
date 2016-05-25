@@ -1,0 +1,61 @@
+package service;
+
+import java.util.Calendar;
+import java.util.List;
+import java.util.Set;
+
+import javax.ejb.Local;
+
+
+import domain.achat.Commande;
+import domain.achat.LigneCommande;
+import domain.catalogue.Marque;
+import domain.catalogue.Modele;
+import domain.catalogue.Piece;
+import domain.catalogue.Type;
+import domain.catalogue.Categorie;
+import domain.client.Adresse;
+import domain.client.Utilisateur;
+
+@Local
+public interface ServiceLocal {
+
+	public abstract List<Marque> getAllMarques() throws ServiceException;
+	public abstract Marque insert(Marque ma) throws ServiceException;	
+	public abstract Marque delete(Marque ma) throws ServiceException;
+	
+	public abstract List<Type> getAllTypes() throws ServiceException;
+	public abstract Type insert(Type ty) throws ServiceException;	
+	public abstract Type delete(Type ty) throws ServiceException;
+	
+	public abstract List<Categorie> getAllCategories() throws ServiceException;
+	public abstract Categorie insert(Categorie ca) throws ServiceException;	
+	public abstract Categorie delete(Categorie ca) throws ServiceException;
+	
+	public abstract List<Modele> getModeleByTypeMarque(Marque ma, Type ty) throws ServiceException;
+	
+	public abstract void associe (Piece piOrigine, Modele mo) throws ServiceException;
+	public abstract List<Piece> getOriginalesBy(Modele mo, Categorie ca) throws ServiceException;
+	public abstract List<Piece> getEquivalentesBy(Modele mo, Categorie ca) throws ServiceException;
+	public abstract List<Piece> getPieceByCat(Categorie ca) throws ServiceException;
+	public abstract Piece getById(int pieceId) throws ServiceException;
+	
+	public abstract Utilisateur insert (Utilisateur util) throws ServiceException;
+	public abstract Utilisateur identifier (String identifiant, String motDePasse) throws ServiceException;
+	public abstract void deleteUtilisateur (Utilisateur util) throws ServiceException;
+	public abstract Set<Adresse> adresseGetByUtilisateur (Utilisateur util) throws ServiceException;
+	
+	public abstract Adresse insertAdresse(Adresse a) throws ServiceException;
+	public abstract void deleteAdresse (Adresse a) throws ServiceException;
+	
+	public abstract List<LigneCommande> getByCom(Commande co) throws ServiceException;
+	public abstract LigneCommande insert(LigneCommande ligneCom) throws ServiceException;
+	public abstract void deleteLigneCommande(LigneCommande ligneCom) throws ServiceException;
+	public abstract LigneCommande insertLignePanier (Piece p, Commande c, int quantite) throws ServiceException;
+	
+	public abstract List<Commande> getAll() throws ServiceException;
+	public abstract Commande insert(Commande co) throws ServiceException;
+	public abstract void deleteCommande(Commande co) throws ServiceException;
+	public abstract Commande insertPanier (Adresse a, Utilisateur u, int montantTotal, Calendar date) throws ServiceException;
+	
+}

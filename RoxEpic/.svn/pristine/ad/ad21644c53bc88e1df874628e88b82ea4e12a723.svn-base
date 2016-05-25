@@ -1,0 +1,44 @@
+package domain.dao;
+
+import java.util.List;
+
+import javax.ejb.EJBException;
+import javax.ejb.Stateless;
+import javax.persistence.*;
+
+import domain.catalogue.Type;
+
+@Stateless
+public class TypeDAO implements TypeLocal{
+	
+	@PersistenceContext(unitName="RoxEpic")
+	private EntityManager em;
+
+//	public ArrayList<Marque> getAll() {
+//		return null;
+//	}
+//	public Marque insert(Marque marque) throws EJBException {
+//		return null;
+//	}
+//	public Marque delete(Marque marque) throws Exception {
+//		return null;
+//	}
+	
+	public Type insert(Type type) throws EJBException {
+		em.persist(type);
+		return type;		
+	}
+	
+	public Type delete(Type type) throws EJBException {
+		em.remove(em.merge(type));
+		return type;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Type> getAll() {
+		return em.createQuery("select object(o) from Type as o").getResultList();
+	}
+	
+	
+	
+}

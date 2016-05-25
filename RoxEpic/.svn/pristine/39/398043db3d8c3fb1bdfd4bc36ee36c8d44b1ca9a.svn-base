@@ -1,0 +1,121 @@
+package domain.catalogue;
+
+import java.io.Serializable;
+
+import javax.persistence.*;
+
+@Entity
+@Table(name="adresse", uniqueConstraints={@UniqueConstraint(columnNames={"id_adresse","libelle"})})
+public class Adresse implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="id_adresse")
+	private int idAdresse;
+
+	@ManyToOne
+	@JoinColumn(name = "id_utilisateur")
+    private int idUtilisateur;
+	
+	@Column(name="libelle",nullable = false, length = 20)
+	private String libelle;
+	
+	@Column(name="rue",nullable = false, length = 40)
+	private String rue;
+	
+	@Column(name="complement",nullable = false, length = 20)
+	private String complement;
+	
+	@Column(name="codePostal",nullable = false, length = 10)
+	private int codePostal;
+	
+	@Column(name="ville",nullable = false, length = 20)
+	private String ville;
+	
+	@Column(name="pays",nullable = false, length = 20)
+	private String pays;
+
+	public Adresse() {		
+	}
+		
+	public Adresse(int idAdresse, int idUtilisateur, String libelle,
+			String rue, String complement, int codePostal, String ville,
+			String pays) {
+		super();
+		this.idAdresse = idAdresse;
+		this.idUtilisateur = idUtilisateur;
+		this.libelle = libelle;
+		this.rue = rue;
+		this.complement = complement;
+		this.codePostal = codePostal;
+		this.ville = ville;
+		this.pays = pays;
+	}
+
+	public int getId() {
+		return idAdresse;
+	}
+
+	public void setId(int idAdresse) {
+		this.idAdresse = idAdresse;
+	}
+
+	public int getIdUtilisateur() {
+		return idUtilisateur;
+	}
+
+	public void setIdUtilisateur(int idUtilisateur) {
+		this.idUtilisateur = idUtilisateur;
+	}
+
+	public String getLibelle() {
+		return libelle;
+	}
+
+	public void setLibelle(String libelle) {
+		this.libelle = libelle;
+	}
+
+	public String getRue() {
+		return rue;
+	}
+
+	public void setRue(String rue) {
+		this.rue = rue;
+	}
+
+	public String getComplement() {
+		return complement;
+	}
+
+	public void setComplement(String complement) {
+		this.complement = complement;
+	}
+
+	public int getCodePostal() {
+		return codePostal;
+	}
+
+	public void setCodePostal(int codePostal) {
+		this.codePostal = codePostal;
+	}
+
+	public String getVille() {
+		return ville;
+	}
+
+	public void setVille(String ville) {
+		this.ville = ville;
+	}
+
+	public String getPays() {
+		return pays;
+	}
+
+	public void setPays(String pays) {
+		this.pays = pays;
+	}
+
+	
+}

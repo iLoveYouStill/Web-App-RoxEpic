@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+      
+<ui:composition template="templates/templatecommon.xhtml">
+	<ui:define name="titre">Recherche</ui:define>
+	
+	<ui:define name="content">
+		<div id="barre_laterale" class="inline_block">
+		<h3>Critères de recherche</h3>
+			<h:form id="formType">
+				<p:selectOneMenu value="#{pieceBean.selectType}" >		
+					<f:selectItem itemLabel="Choisir un type" itemValue=""/>
+					<f:selectItems value="#{typeBean.types}" var="ty" itemLabel="#{ty.libelle}" itemValue="#{ty.idType}"/>
+					<p:ajax update="formModel, formListe" />
+				</p:selectOneMenu>
+			</h:form>
+			<h:form id="formMarque">
+				<p:selectOneMenu value="#{pieceBean.selectMarque}">
+					<f:selectItem itemLabel="Choisir une marque" itemValue=""/>
+					<f:selectItems value="#{marqueBean.marques}" var="ma" itemLabel="#{ma.libelle}" itemValue="#{ma.idMarque}"/>
+					<p:ajax update="formModel, formListe" />
+				</p:selectOneMenu>
+			</h:form>
+
+			<h:form id="formModel">
+				<p:selectOneMenu value="#{modeleBean.selectModele}" disabled="#{modeleBean.exist}">
+					<f:selectItem itemLabel="Choisir un modèle" itemValue="0"/>
+					<f:selectItems value="#{modeleBean.getAllModeles(pieceBean.selectType,pieceBean.selectMarque)}" var="mo" itemLabel="#{mo.libelle}" itemValue="#{mo.idModele}"/>	
+					<p:ajax update="formModel formListe" listener="#{pieceBean.recherchePieces()}"/>
+				</p:selectOneMenu>
+			
+				<p:selectOneRadio value="#{pieceBean.selectFiltre}" disabled="#{modeleBean.exist}">
+					<f:selectItem itemLabel="Pièces d'origine" itemValue="origine" />
+					<f:selectItem itemLabel="Pièces équivalentes" itemValue="equivalente" />
+					<f:selectItem itemLabel="Les deux" itemValue="lesDeux"/>
+					<p:ajax update="formModel formListe" listener="#{pieceBean.recherchePieces()}"/>
+				</p:selectOneRadio>
+
+				<p:selectOneMenu value="#{pieceBean.selectCategorie}" disabled="#{modeleBean.exist}">
+					<f:selectItem itemLabel="Choisir une catégorie" itemValue="0" />
+					<f:selectItems value="#{categorieBean.categories}" var="ca" itemLabel="#{ca.libelle}" itemValue="#{ca.idCategorie}"/>
+	 				<p:ajax update="formModel formListe" listener="#{pieceBean.recherchePieces()}" />
+				</p:selectOneMenu>
+			</h:form>
+		</div>
+		
+		<div id="resultats" class="inline_block">	
+		 	<h:form id="formListe">
+			 	<p:dataTable id="tableauResultats" value="#{pieceBean.pieces}" var="p"   rows="10" paginator="#{pieceBean.exist}" 
+			 	paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="10,15"  emptyMessage="Aucune pièce ne correspond à votre recherche" class="texte_centre bloc_centre" paginatorPosition="bottom">
+			 	<f:facet name="header">liste des pièces</f:facet>
+			 		<p:column id="piece">
+			 			<f:facet name="header">Nom pièce</f:facet>
+			 			<h:outputText value="#{p.libelle}" />
+			 		</p:column>
+			 		<p:column id="refPiece">
+			 			<f:facet name="header">Référence</f:facet>
+			 			<h:outputText value="#{p.reference}" />
+			 		</p:column>
+			 		<p:column id="prixPiece">
+			 			<f:facet name="header">Prix unitaire</f:facet>
+			 			<h:outputText value="#{p.prix}" />
+			 		</p:column>
+			 		<p:column id="stock">
+			 			<f:facet name="header">Stock</f:facet>
+			 			<h:outputText value="#{p.stock}" />
+			 		</p:column>
+			 		<p:column id="ajoutPanier">
+			 			<f:facet name="header">Ajouter au panier</f:facet>
+			 			<div id="ajoutPanierBouton">
+				 			<p:commandButton styleClass="boutonAjout" action="#{panierBean.ajouterLignePanier(p, 1)}" icon="ui-icon-cart" disabled="#{p.stock == 0}" update="form_menu:bouton_panier">
+					 			<!-- <p:effect type="pulsate" event="click" for="form_menu:bouton_panier" delay="100"/> -->
+				 			</p:commandButton>
+			 			</div>
+			 		</p:column>
+			 	</p:dataTable>
+			 </h:form>
+			 <h:form>
+	 			<p:dialog header="Confirmation d'ajout" widgetVar="dialogConfirm" rendered="#{panierBean.verifAjout}" >
+	 				<p><h:outputText value="Voulez-vous valider votre commande?" /></p>
+	 				<p:commandButton value="Continuer mes achats" onclick="PF('dialogConfirm').hide();" />
+	 				<p:commandButton value="Consulter mon panier" action="recapPanier?faces-redirect=true" ajax="false"/>
+	 			</p:dialog>
+			</h:form>
+		</div>
+	</ui:define>
+</ui:composition>
+</html>

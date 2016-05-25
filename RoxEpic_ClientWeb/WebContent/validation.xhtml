@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+      
+<ui:composition template="templates/templatecommon.xhtml">
+	<ui:define name="titre">Validation de la commande</ui:define>
+	
+	<ui:define name="content">
+		<h:form id="form_tunnel" class="bloc_centre texte_centre">
+			<h1>Validez votre commande en 5 étapes</h1>
+			<p:steps activeIndex="4" styleClass="custom" readonly="false">
+			    <p:menuitem value="Panier" url="recapPanier.jsf"/>
+			    <p:menuitem value="Identification" url="identification.jsf"/>
+			    <p:menuitem value="Livraison" url="livraison.jsf"/>
+			    <p:menuitem value="Paiement" url="paiement.jsf"/>
+			    <p:menuitem value="Validation" url="validation.jsf"/>
+			</p:steps>
+			
+		</h:form>
+		
+		<h:form id="listesPanier" onkeypress="if (event.keyCode == 13) { return false; }">
+		 	<p:dataTable value="#{panierBean.lignesPanier}" var="lp" class="texte_centre bloc_centre panier_tableau">
+		 	<f:facet name="header">Votre commande est validée</f:facet>
+		 		<p:column>
+		 			<f:facet name="header">Nom pièce</f:facet>
+		 			<h:outputText value="#{lp.piece.libelle}" />
+		 		</p:column>
+		 		<p:column id="refPiece">
+		 			<f:facet name="header">Référence</f:facet>
+		 			<h:outputText value="#{lp.piece.reference}" />
+		 		</p:column>
+		 		<p:column id="prixPiece">
+		 			<f:facet name="header">Prix unitaire</f:facet>
+		 			<h:outputText value="#{lp.piece.prix}" />
+		 		</p:column>
+		 		<p:column id="quantite">
+		 			<f:facet name="header">Quantité</f:facet>
+        			<h:outputText value="#{lp.quantite}" />
+		 		</p:column>
+		 		<p:column id="prixTotalPiece">
+					<f:facet name="header">Total pièce</f:facet>
+					<h:outputText value="#{(lp.piece.prix)*(lp.quantite)}" />
+				</p:column>
+		 	</p:dataTable>
+
+		 	<p:dataTable value="#{panierBean}" var="cb" class="texte_centre bloc_centre montantTotal_tableau" emptyMessage="0">
+				<p:column>
+					<f:facet name="header">Frais de port</f:facet>
+		 			<h:outputText value="#{cb.livraison} HT" />
+		 		</p:column>
+			</p:dataTable>
+			
+			<p:dataTable value="#{panierBean}" var="cb" class="texte_centre bloc_centre montantTotal_tableau" emptyMessage="0">
+				<p:column>
+		 			<f:facet name="header">Total</f:facet>
+		 			<h:outputText value="#{cb.montantTotal} HT" />
+		 		</p:column>
+			</p:dataTable>
+		</h:form>
+		<h:form>
+			<p:remoteCommand name="onload" action="#{panierBean.nettoyage}" /> <!-- autoRun="true" -->
+		</h:form>
+		<div class="bloc_centre texte_centre">
+				<h:outputText value="Paiement validé" />
+		</div>
+	</ui:define>
+
+</ui:composition>
+
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+      
+<ui:composition template="templates/templatecommon.xhtml">
+	<ui:define name="titre">Livraison</ui:define>
+	
+	<ui:define name="content">
+		<h:form id="form_tunnel" class="bloc_centre texte_centre">
+			<h1>Validez votre commande en 5 étapes</h1>
+			<p:steps activeIndex="1" styleClass="custom" readonly="false">
+			    <p:menuitem value="Panier" url="#"/>
+			    <p:menuitem value="Identification" url="#"/>
+			    <p:menuitem value="Livraison" url="#"/>
+			    <p:menuitem value="Paiement" url="#"/>
+			    <p:menuitem value="Validation" url="#"/>
+			</p:steps>
+		</h:form>
+		
+		<h:form>
+			<p:growl id="message" showDetail="true"/>
+	        <p:inputText placeholder="Identifiant" size="15" styleClass="input_menu" value="#{utilisateurBean.email}" required="true"/>
+	        <p:password placeholder="Mot de passe" size="15" styleClass="input_menu" value="#{utilisateurBean.motDePasse}" required="true"/>
+	        <p:commandButton value="Connexion" icon="ui-icon-extlink" action="#{utilisateurBean.identifier(2)}"/>
+        </h:form>
+        
+<!--         <h:form> -->
+<!--         	<p:commandButton value="S'enregistrer" icon="ui-icon-key" action="#{utilisateurBean.definePageDep(2)}" /> -->
+<!--         </h:form> -->
+	</ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,23 @@
+package domain.achat;
+
+public class Panier {
+
+	private int idPanier;
+
+	public int getIdPanier() {
+		return idPanier;
+	}
+
+	public void setIdPanier(int idPanier) {
+		this.idPanier = idPanier;
+	}
+
+	public Panier() {	
+	}
+	
+	public Panier(int idPanier) {
+		super();
+		this.idPanier = idPanier;
+	}
+	
+}

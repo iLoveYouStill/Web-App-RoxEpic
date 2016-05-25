@@ -1,0 +1,44 @@
+package domain.dao;
+
+import java.util.List;
+
+import javax.ejb.EJBException;
+import javax.ejb.Stateless;
+import javax.persistence.*;
+
+import domain.catalogue.Marque;
+
+@Stateless
+public class MarqueDAO implements MarqueLocal{
+	
+	@PersistenceContext(unitName="RoxEpic")
+	private EntityManager em;
+
+//	public ArrayList<Marque> getAll() {
+//		return null;
+//	}
+//	public Marque insert(Marque marque) throws EJBException {
+//		return null;
+//	}
+//	public Marque delete(Marque marque) throws Exception {
+//		return null;
+//	}
+	
+	public Marque insert(Marque marque) throws EJBException {
+		em.persist(marque);
+		return marque;		
+	}
+	
+	public Marque delete(Marque marque) throws EJBException {
+		em.remove(em.merge(marque));
+		return marque;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Marque> getAll() {
+		return em.createQuery("select object(o) from Marque as o").getResultList();
+	}
+	
+	
+	
+}

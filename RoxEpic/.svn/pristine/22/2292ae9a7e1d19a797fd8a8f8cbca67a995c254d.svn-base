@@ -1,0 +1,121 @@
+package service;
+
+import java.util.List;
+
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
+
+import org.jboss.logging.Logger;
+
+import domain.catalogue.Categorie;
+import domain.catalogue.Marque;
+import domain.catalogue.Type;
+import domain.dao.CategorieLocal;
+import domain.dao.MarqueLocal;
+import domain.dao.TypeLocal;
+
+@Stateless
+public class Service implements ServiceRemote {
+	
+	@EJB
+	private MarqueLocal marqueDAO;
+	private TypeLocal typeDAO;
+	private CategorieLocal categorieDAO;
+	private final static Logger logger = Logger.getLogger(Service.class);
+		
+	
+	@Override
+	public List<Marque> getAllMarques() throws ServiceException {
+		List<Marque> listMarque=null;
+		try {
+			listMarque=marqueDAO.getAll();
+		} catch (Exception e) {
+			throw new ServiceException("Database Marque : GetAll Error");
+		}
+		return listMarque;
+	}
+	@Override
+	public Marque insert(Marque ma) throws ServiceException {
+		Marque marque=null;
+		try {
+			marque=marqueDAO.insert(ma);
+			logger.error("marque successfull insert");
+		} catch (Exception e) {
+			logger.error("logger error : marque failed insert");
+			throw new ServiceException("Database Marque : Insert Error");
+		}
+		return marque;
+	}
+	@Override
+	public Marque delete(Marque ma) throws ServiceException {
+		try {
+			marqueDAO.delete(ma);
+		} catch (Exception e) {
+			throw new ServiceException("Database Marque : Delete Error");
+		}		
+		return ma;
+	}
+	@Override
+	public List<Type> getAllTypes() throws ServiceException {
+		List<Type> listType=null;
+		try {
+			listType=typeDAO.getAll();
+		} catch (Exception e) {
+			throw new ServiceException("Database Marque : GetAll Error");
+		}
+		return listType;
+	}
+	@Override
+	public Type insert(Type ty) throws ServiceException {
+		Type type=null;
+		try {
+			type=typeDAO.insert(ty);
+			logger.error("type successfull insert");
+		} catch (Exception e) {
+			logger.error("logger error : type failed insert");
+			throw new ServiceException("Database Type : Insert Error");
+		}
+		return type;
+	}
+	@Override
+	public Type delete(Type ty) throws ServiceException {
+		try {
+			typeDAO.delete(ty);
+		} catch (Exception e) {
+			throw new ServiceException("Database Marque : Delete Error");
+		}		
+		return ty;
+	}
+	@Override
+	public List<Categorie> getAllCategories() throws ServiceException {
+		List<Categorie> listCategorie=null;
+		try {
+			listCategorie=categorieDAO.getAll();
+		} catch (Exception e) {
+			throw new ServiceException("Database Marque : GetAll Error");
+		}
+		return listCategorie;
+	}
+	@Override
+	public Categorie insert(Categorie ca) throws ServiceException {
+		Categorie categorie=null;
+		try {
+			categorie=categorieDAO.insert(ca);
+			logger.error("categorie successfull insert");
+		} catch (Exception e) {
+			logger.error("logger error : categorie failed insert");
+			throw new ServiceException("Database Categorie : Insert Error");
+		}
+		return categorie;
+	}
+	@Override
+	public Categorie delete(Categorie ca) throws ServiceException {
+		try {
+			categorieDAO.delete(ca);
+		} catch (Exception e) {
+			throw new ServiceException("Database Marque : Delete Error");
+		}		
+		return ca;
+	}
+
+}

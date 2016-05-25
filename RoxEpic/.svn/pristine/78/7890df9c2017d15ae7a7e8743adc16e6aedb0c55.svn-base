@@ -1,0 +1,52 @@
+package domain.catalogue;
+
+import java.io.Serializable;
+import javax.persistence.*;
+
+
+/**
+ * The persistent class for the marque database table.
+ * 
+ */
+@Entity
+@Table(name="marque")
+public class Marque implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="id_marque")
+	private int idMarque;
+
+	@Column(name="libelle")
+	private String libelleMarque;
+
+	public Marque() {
+	}
+	
+	public Marque(String libelleMarque) {
+    	this.libelleMarque = libelleMarque;	
+    }
+	
+	public Marque(int idMarque, String libelleMarque) {
+    	this.libelleMarque = libelleMarque;	
+    	this.idMarque = idMarque;
+    }
+	
+	public int getIdMarque() {
+		return this.idMarque;
+	}
+
+	public void setIdMarque(int idMarque) {
+		this.idMarque = idMarque;
+	}
+
+	public String getLibelleMarque() {
+		return this.libelleMarque;
+	}
+
+	public void setLibelleMarque(String libelleMarque) {
+		this.libelleMarque = libelleMarque;
+	}
+
+}

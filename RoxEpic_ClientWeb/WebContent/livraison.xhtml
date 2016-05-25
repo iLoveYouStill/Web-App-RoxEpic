@@ -1,0 +1,175 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+      
+<ui:composition template="templates/templatecommon.xhtml">
+	<ui:define name="titre">Livraison</ui:define>
+	
+	<ui:define name="content">
+		<h:form id="form_tunnel" class="bloc_centre texte_centre">
+			<h1>Validez votre commande en 5 étapes</h1>
+			<p:steps activeIndex="2" styleClass="custom" readonly="false">
+			    <p:menuitem value="Panier" url="panier.jsf"/>
+			    <p:menuitem value="Identification" url="identification.jsf"/>
+			    <p:menuitem value="Livraison" url="livraison.jsf"/>
+			    <p:menuitem value="Paiement" url="paiement.jsf"/>
+			    <p:menuitem value="Validation" url="validation.jsf"/>
+			</p:steps>
+		</h:form>
+	    <p:fieldset legend="Mode de livraison" styleClass="livraison inline_block">
+	    	<h:form>
+	    	   <p:outputPanel id="customPanel">
+			        <p:selectOneRadio id="customRadio" value="#{panierBean.livraison}" layout="custom">
+			        	<f:selectItem itemLabel="Mondial Relay" itemValue="4.9" />
+			        	<f:selectItem itemLabel="Colissimo" itemValue="9.9" />
+			        	<f:selectItem itemLabel="DHL" itemValue="15.9" />
+			        	<f:selectItem itemLabel="UPS" itemValue="19.9" />
+			        	<f:selectItem itemLabel="Retrait sur place" itemValue="0" />
+			        	<p:ajax />
+			        </p:selectOneRadio>
+			 
+			        <h:panelGrid columns="4" cellpadding="6">
+			        	<p:radioButton id="opt1" for="customRadio" itemIndex="0" itemValue="4.9"/>
+						<h:outputLabel for="opt1" value="Mondial Relay" />
+						<p:graphicImage for="opt1" name="images/mondial_relay.jpg"  width="90" height="62"  />
+						<h:outputLabel for="opt1" value="4,90 € TTC" />
+						
+			            <p:radioButton id="opt2" for="customRadio" itemIndex="1" itemValue="9.9" />
+			            <h:outputLabel for="opt2" value="Colissimo" />
+			            <p:graphicImage for="opt2" name="images/colissimo.png"  width="90" height="62"  />
+			            <h:outputLabel for="opt2" value="9,90 € TTC" />
+			 
+						<p:radioButton id="opt3" for="customRadio" itemIndex="2" itemValue="15.9" />
+			            <h:outputLabel for="opt3" value="DHL" />
+			            <p:graphicImage for="opt3" name="images/dhl.jpg"  width="90" height="62"  />
+			            <h:outputLabel for="opt3" value="15,90 € TTC" />
+			 
+			            <p:radioButton id="opt4" for="customRadio" itemIndex="3" itemValue="19.9" />
+			            <h:outputLabel for="opt4" value="UPS" />
+			            <p:graphicImage for="opt4" name="images/ups.jpg"  width="90" height="62"  />
+			            <h:outputLabel for="opt4" value="19,90 € TTC" />
+			            			 
+			            <p:radioButton id="opt5" for="customRadio" itemIndex="4" itemValue="0"/>
+			            <h:outputLabel for="opt5" value="Retrait sur place" />
+			            <p:graphicImage for="opt5" name="images/retrait_sur_place.jpg"  width="90" height="62"  />
+			            <h:outputLabel for="opt5" value="GRATUIT" />
+			        </h:panelGrid>
+			        
+    			</p:outputPanel>
+    		</h:form>
+    	</p:fieldset>
+   		<p:fieldset legend="Adresse de livraison" styleClass="livraison inline_block">
+   			<br/><br/>
+	        		        			        	
+        		<h:form id="panel_ad">	        			
+		            <h:panelGrid columns="3" cellpadding="5">							           						            				            										
+						<h:outputText value="Libellé de l'adresse"/>
+						<p:inputText id="libelle" value="#{adresseBean.libelle}" required="true"
+						requiredMessage="Veuillez renseigner l'intitulé de l'adresse. Exemple : Maison" validatorMessage="Libellé invalide" label="Libellé de l'adresse">						
+							<f:validateLength minimum="3" maximum="20"/>
+							<f:validateRegex pattern="([A-Za-zéèêïëî -]*)"/>
+							<p:ajax update="panel_ad:messLib" event="keyup" />			
+						</p:inputText>
+						<p:message id="messLib" for="libelle" errorStyle="color:blue" />
+						
+						<h:outputText value="N° et nom de rue"/>
+						<p:inputText id="rue" value="#{adresseBean.rue}" required="true" 
+						requiredMessage="Veuillez renseigner le numéro du domicile et le nom de la rue"  validatorMessage="N° et nom de rue invalides" label="N° et nom de rue">						
+							<f:validateLength minimum="3" maximum="20"/>
+							<f:validateRegex pattern="([0-9]+[A-Za-zéèêïëî -]*)"/>
+							<p:ajax update="panel_ad:messRue" event="keyup" />			
+						</p:inputText>
+						<p:message id="messRue" for="rue" errorStyle="color:blue" />
+						
+						<h:outputText value="Complément d'adresse"/>
+						<p:inputText id="complement" value="#{adresseBean.complement}" required="true" 
+						requiredMessage="Veuillez renseigner votre complément d'adresse" validatorMessage="Complément d'adresse invalide" label="Complément d'adresse">						
+							<f:validateLength minimum="3" maximum="20"/>
+							<f:validateRegex pattern="([0-9]+[A-Za-zéèêïëî -]*)"/>
+							<p:ajax update="panel_ad:messComp" event="keyup" />			
+						</p:inputText>
+						<p:message id="messComp" for="complement" errorStyle="color:blue" />
+						
+						<h:outputText value="Code Postal"/>
+						<p:inputText id="codePostal" value="#{adresseBean.codePostal}" required="true"
+						 requiredMessage="Veuillez renseigner votre code postal" validatorMessage="Code postal invalide" label="Code Postal">						
+							<f:validateLength minimum="4" maximum="5"/>
+							<!-- <f:validateRegex pattern="[0-9]*"/> -->
+							<p:ajax update="panel_ad:messCoPo" event="keyup" />			
+						</p:inputText>
+						<p:message id="messCoPo" for="codePostal" errorStyle="color:blue" />
+						
+						<h:outputText value="Ville"/>
+						<p:inputText id="ville" value="#{adresseBean.ville}" required="true" 
+						requiredMessage="Veuillez renseigner votre ville" validatorMessage="Ville invalide" label="Ville">						
+							<f:validateLength minimum="3" maximum="20"/>
+							<f:validateRegex pattern="([A-Za-zéèêïëî -]*)"/>
+							<p:ajax update="panel_ad:messVil" event="keyup" />			
+						</p:inputText>
+						<p:message id="messVil" for="ville" errorStyle="color:blue" />
+						
+						<h:outputText value="Pays"/>
+						<p:inputText id="pays" value="#{adresseBean.pays}" required="true" 
+						requiredMessage="Veuillez renseigner votre pays" validatorMessage="Pays invalide" label="Pays">						
+							<f:validateLength minimum="3" maximum="20"/>
+							<f:validateRegex pattern="([A-Za-zéèêïëî -]*)"/>
+							<p:ajax update="panel_ad:messPay" event="keyup" />			
+						</p:inputText>
+						<p:message id="messPay" for="pays" errorStyle="color:blue" />    
+						                
+		            </h:panelGrid>	
+		            <br/>		   		            			   	    	            		
+	           		<p:commandLink rendered="#{not empty adresseBean.libelle}" action="#{adresseBean.ajouterAdresse}" value="Je veux ajouter une adresse !" update="panel_ad"/>
+	           		<br/><br/>												
+					<h:outputText class="titre_utilisateur" value="Liste d'adresses"/><br/><br/>
+			   
+			    	<h:selectOneMenu id="id_adresse" value="#{adresseBean.idAdresse}" >	            		
+	            		<!-- <f:selectItem itemLabel="Choisir une adresse" itemValue=""/> -->
+						<f:selectItems value="#{adresseBean.listAdresses}" var="adr" itemLabel="#{adr.libelle}" itemValue="#{adr.id}"  />
+			            <p:ajax listener="#{adresseBean.afficherAdresse}" update="panel_ad"/>								         
+					</h:selectOneMenu>
+			        							        	
+			        &nbsp;<p:commandButton rendered="#{empty adresseBean.libelle}" actionListener="#{adresseBean.save}" action="#{adresseBean.ajouterAdresse}" 
+			        value="Ajouter une adresse" update="panel_ad" icon="ui-icon-check"/>
+			        &nbsp;<p:commandButton rendered="#{not empty adresseBean.libelle}" actionListener="#{adresseBean.save}" action="#{adresseBean.modifier}" 
+			        value="Modifier cette adresse" update="panel_ad" icon="ui-icon-check"/>
+					&nbsp;<p:commandButton rendered="#{not empty adresseBean.libelle}" actionListener="#{adresseBean.save}" action="#{adresseBean.supprimer}" 
+					value="Supprimer cette adresse" update="panel_ad" icon="ui-icon-check"/>
+			    	<p:messages/>
+			    	
+			    </h:form> 		
+       		<!-- <h:form id="panelAdresses">
+       		<h:outputText class="titre_utilisateur" value="Choisir une adresse"/><br/>
+       			<p:selectOneMenu id="id_adresse" value="#{adresseBean.idAdresse}" >
+            		
+					<f:selectItems value="#{adresseBean.listAdresses}" var="adr" itemLabel="#{adr.libelle}" itemValue="#{adr.id}"  />
+		            <p:ajax listener="#{adresseBean.afficherAdresse}" update="panelAdresses"/>
+		        </p:selectOneMenu>
+       			<p:commandButton rendered="#{empty adresseBean.libelle}" action="#{adresseBean.ajouterByUtilisateur}" value="Ajouter une adresse" update="panelAdresses"/>
+	            <h:panelGrid columns="2" cellpadding="5">							           						            
+	            	<h:outputText class="titre_utilisateur" value="Ajout d'adresse"/><br/>										
+					<h:outputText value="Libellé"/>
+					<p:inputText id="libelle" value="#{adresseBean.libelle}" required="true"/>
+					<h:outputText value="Adresse"/>
+					<p:inputText id="rue" value="#{adresseBean.rue}" required="true" />
+					<h:outputText value="Complément d'adresse"/>
+					<p:inputText id="complement" value="#{adresseBean.complement}" required="true" />
+					<h:outputText value="Code Postal"/>
+					<p:inputText id="codePostal" value="#{adresseBean.codePostal}" required="true" />
+					<h:outputText value="Ville"/>
+					<p:inputText id="ville" value="#{adresseBean.ville}" required="true" />
+					<h:outputText value="Pays"/>
+					<p:inputText id="pays" value="#{adresseBean.pays}" required="true" />                    
+	            </h:panelGrid>					            
+				<p:commandLink action="#{adresseBean.ajouterAdresse}" value="Ajouter une adresse" update="panelAdresses"/>
+           	</h:form> -->
+           	
+   		</p:fieldset>
+    	<p:button href="paiement.jsf" value="Paiement" icon="ui-icon-arrow-1-e" styleClass="alignement_droit" />
+	</ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,52 @@
+package domain.catalogue;
+
+import java.io.Serializable;
+import javax.persistence.*;
+
+
+/**
+ * The persistent class for the type_modele database table.
+ * 
+ */
+@Entity
+@Table(name="type")
+public class Type implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="id_type")
+	private int idType;
+
+	@Column(name="libelle")
+	private String libelle;
+
+	public Type() {
+	}
+
+	public Type(String libelle) {
+    	this.libelle = libelle;	
+    }
+	
+	public Type(int idType, String libelle) {
+    	this.libelle = libelle;	
+    	this.idType = idType;
+    }
+	
+	public int getId() {
+		return this.idType;
+	}
+
+	public void setId(int idType) {
+		this.idType = idType;
+	}
+
+	public String getLibelle() {
+		return this.libelle;
+	}
+
+	public void setLibelle(String libelle) {
+		this.libelle = libelle;
+	}
+
+}

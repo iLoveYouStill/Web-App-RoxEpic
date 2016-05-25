@@ -1,0 +1,47 @@
+package domain.catalogue;
+
+import java.io.Serializable;
+import javax.persistence.*;
+
+@Entity
+@Table(name="marque")
+public class Marque implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="id_marque", unique=true)
+	private int idMarque;
+
+	@Column(name="libelle",nullable = false, unique=true, length = 50)
+	private String libelle;
+
+	public Marque() {
+	}
+	
+	public Marque(String libelle) {
+    	this.libelle = libelle;	
+    }
+	
+	public Marque(int idMarque, String libelle) {
+    	this.libelle = libelle;	
+    	this.idMarque = idMarque;
+    }
+	
+	public int getId() {
+		return this.idMarque;
+	}
+
+	public void setId(int idMarque) {
+		this.idMarque = idMarque;
+	}
+
+	public String getLibelle() {
+		return this.libelle;
+	}
+
+	public void setLibelle(String libelle) {
+		this.libelle = libelle;
+	}
+
+}

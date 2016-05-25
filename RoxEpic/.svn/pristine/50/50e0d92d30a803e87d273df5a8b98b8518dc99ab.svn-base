@@ -1,0 +1,40 @@
+package domain.dao;
+
+import javax.ejb.EJBException;
+import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
+import domain.client.Adresse;
+import domain.client.Utilisateur;
+
+@Stateless
+public class AdresseDAO implements AdresseLocal{
+	
+	@PersistenceContext(unitName="RoxEpic")
+	EntityManager em;
+
+	@Override
+	public Adresse insert(Adresse a) throws EJBException {
+		try{
+			em.persist(a);
+		}
+		catch(EJBException e){
+			throw new EJBException (e.getMessage());
+		}
+		return a;
+	}
+	
+	@Override
+	public void deleteAdresse (Adresse a) throws Exception{
+		Adresse ad= new Adresse();
+		try{
+			util=em.find(Utilisateur.class, u.getId());
+			em.remove(util);
+		}
+		catch(Exception e){
+			throw new Exception("L'utilisateur n'existe pas");
+		}
+	}
+
+}

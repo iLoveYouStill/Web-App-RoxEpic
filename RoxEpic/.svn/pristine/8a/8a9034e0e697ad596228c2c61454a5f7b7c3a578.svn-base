@@ -1,0 +1,96 @@
+package domain.catalogue;
+
+import java.util.ArrayList;
+import java.util.List;
+
+
+import java.io.Serializable;
+
+import javax.persistence.*;
+
+@Entity
+public class Modele implements Serializable {
+   
+ 
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4717649725126257344L;
+
+	/*Données membres*/
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="id_modele")
+	private int idModele;
+    
+	@Column(name="libelle", nullable=false, unique=true, length=50)
+    private String libelle;
+   
+	@ManyToOne
+	@JoinColumn(name = "id_marque")
+    private Marque marque;
+    
+	@ManyToOne
+	@JoinColumn(name = "id_type")
+    private Type type;
+   
+	@ManyToMany
+    @JoinTable(name="compose")
+    private List<Piece> lp  = new ArrayList<Piece> ();
+    
+    /*Constructeur*/
+    
+    public Modele() {
+		
+	}
+    
+    
+    /*Getteurs*/
+
+	public int getId() {
+		return idModele;
+	}
+	
+	public String getLibelle() {
+		return libelle;
+	}
+
+	public Marque getMarque() {
+		return marque;
+	}
+	
+	public Type getType() {
+		return type;
+	}
+	
+	public List<Piece> getLp() {
+		return lp;
+	}
+	
+	
+	/*Setteurs*/
+
+	public void setId(int id) {
+		this.idModele = id;
+	}
+	
+	public void setLibelle(String libelle) {
+		this.libelle = libelle;
+	}
+
+	public void setMarque(Marque marque) {
+		this.marque = marque;
+	}
+
+	public void setType(Type type) {
+		this.type = type;
+	}
+
+	public void setLp(List<Piece> lp) {
+		this.lp = lp;
+	}
+  
+    
+}

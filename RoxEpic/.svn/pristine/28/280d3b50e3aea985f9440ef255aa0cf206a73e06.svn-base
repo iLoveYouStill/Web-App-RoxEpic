@@ -1,0 +1,77 @@
+package domain.achat;
+
+import java.io.Serializable;
+
+import javax.persistence.*;
+
+import domain.catalogue.Piece;
+
+@Embeddable
+public class LigneCommandePK implements Serializable {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 352720101548243997L;
+	
+	@ManyToOne
+	@JoinColumn(name = "id_commande")
+    private Commande commande;
+	
+	@ManyToOne
+	@JoinColumn(name = "id_piece")
+    private Piece piece;
+    
+	public LigneCommandePK() {
+
+	}
+
+	public LigneCommandePK(Commande commande, Piece piece) {
+		this.commande = commande;
+		this.piece = piece;
+	}
+	
+	public Commande getCommande() {
+		return commande;
+	}
+
+	public Piece getPiece() {
+		return piece;
+	}
+
+	@Override
+	public String toString() {
+		return commande + " - " + piece;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((commande == null) ? 0 : commande.hashCode());
+		result = prime * result + ((piece == null) ? 0 : piece.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		LigneCommandePK other = (LigneCommandePK) obj;
+		if (commande == null) {
+			if (other.commande != null)
+				return false;
+		} else if (!commande.equals(other.commande))
+			return false;
+		if (piece == null) {
+			if (other.piece != null)
+				return false;
+		} else if (!piece.equals(other.piece))
+			return false;
+		return true;
+	}
+}

@@ -1,0 +1,47 @@
+package domain.achat;
+
+import domain.catalogue.Piece;
+
+public class LigneDePanier {
+
+	private int quantite;
+	private Panier panier;
+	private Piece piece;
+	
+	public LigneDePanier() {		
+	}
+
+	public LigneDePanier(int quantite, Panier panier, Piece piece) {
+		this.quantite = quantite;
+		this.panier = panier;
+		this.piece = piece;
+	}
+
+	public int getQuantite() {
+		return quantite;
+	}
+
+	public void setQuantite(int quantite) {
+		this.quantite = quantite;
+	}
+
+	public Panier getPanier() {
+		return panier;
+	}
+
+	public void setPanier(Panier panier) {
+		this.panier = panier;
+	}
+
+	public Piece getPiece() {
+		return piece;
+	}
+
+	public void setPiece(Piece piece) {
+		this.piece = piece;
+	}
+	
+	
+	
+	
+}

@@ -1,0 +1,25 @@
+package domain.achat;
+
+import java.io.Serializable;
+
+import javax.persistence.*;
+
+@Embeddable
+public class LigneCommandePK implements Serializable {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 352720101548243997L;
+
+	@Basic(optional = false)
+    @Column(name = "id_commande")
+    private int idCommande;
+	
+    @Basic(optional = false)
+    @Column(name = "id_piece")
+    private int idPiece;
+    
+	public LigneCommandePK() {
+
+	}
+}

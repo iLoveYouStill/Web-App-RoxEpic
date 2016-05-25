@@ -1,0 +1,24 @@
+package service;
+
+import java.util.List;
+import javax.ejb.Remote;
+import domain.catalogue.Marque;
+import domain.catalogue.Type;
+import domain.catalogue.Categorie;
+
+@Remote
+public interface ServiceRemote {
+
+	public abstract List<Marque> getAll() throws ServiceException;
+	public abstract Marque insert(Marque ma) throws ServiceException;	
+	public abstract Marque delete(Marque ma) throws ServiceException;
+	
+	public abstract List<Type> getAll() throws ServiceException;
+	public abstract Type insert(Type ty) throws ServiceException;	
+	public abstract Type delete(Type ty) throws ServiceException;
+	
+	public abstract List<Categorie> getAll() throws ServiceException;
+	public abstract Marque insert(Categorie ca) throws ServiceException;	
+	public abstract Marque delete(Categorie ca) throws ServiceException;
+	
+}

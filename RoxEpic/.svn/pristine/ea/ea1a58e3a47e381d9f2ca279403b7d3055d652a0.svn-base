@@ -1,0 +1,81 @@
+package domain.dao;
+
+
+
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.ejb.EJBException;
+import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+
+import domain.client.Adresse;
+import domain.client.Utilisateur;
+
+
+@Stateless
+public class UtilisateurDAO implements UtilisateurLocal {
+		
+	@PersistenceContext(unitName="RoxEpic")
+	EntityManager em;
+
+	@Override
+	public Utilisateur insert(Utilisateur u) throws EJBException {
+		try{
+			em.persist(u);
+		}
+		catch(EJBException e){
+			throw new EJBException (e.getMessage());
+		}
+		return u;
+	}
+	
+	@Override
+	public void delete(Utilisateur u) throws Exception {
+		Utilisateur util= new Utilisateur();
+		try{
+			util=em.find(Utilisateur.class, u.getId());
+			em.remove(util);
+		}
+		catch(Exception e){
+			throw new Exception("L'utilisateur n'existe pas");
+		}
+		
+	}
+
+	@Override
+	public Utilisateur identifier(Utilisateur util) throws Exception {
+		Utilisateur u=null;
+		try{
+			Query q= em.createQuery("SELECT u FROM Utilisateur u WHERE u.email= :param1 AND u.motDePasse= :param2");
+			q.setParameter("param1",util.getEmail());
+			q.setParameter("param2", util.getMotDePasse());
+			u=(Utilisateur)q.getSingleResult();
+		}
+		catch(Exception e){
+			throw new Exception(e.getMessage());
+		}
+		return u;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public Set<Adresse> adressesGetByUtilisateur(Utilisateur u) throws Exception {
+		Set<Adresse> adresses;
+		try{
+			Query q=em.createQuery("SELECT a FROM Utilisateur AS u JOIN u.adresses as a WHERE u= :param");
+			//Query q=em.createQuery("SELECT adresses FROM Utilisateur u WHERE u= :param");
+			q.setParameter("param", u);
+			adresses= new HashSet<Adresse>(q.getResultList());
+		}
+		catch(Exception e){
+			throw new Exception(e.getMessage());
+		}
+		return adresses;
+	}
+
+	
+
+}

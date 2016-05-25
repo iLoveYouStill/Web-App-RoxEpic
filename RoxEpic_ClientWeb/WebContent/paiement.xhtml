@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+      
+<ui:composition template="templates/templatecommon.xhtml">
+	<ui:define name="titre">Paiement</ui:define>
+	
+	<ui:define name="content">
+		<h:form id="form_tunnel" class="bloc_centre texte_centre">
+			<h1>Validez votre commande en 5 étapes</h1>
+			<p:steps activeIndex="3" styleClass="custom" readonly="false">
+			    <p:menuitem value="Panier" url="recapPanier.jsf"/>
+			    <p:menuitem value="Identification" url="identification.jsf"/>
+			    <p:menuitem value="Livraison" url="livraison.jsf"/>
+			    <p:menuitem value="Paiement" url="paiement.jsf"/>
+			    <p:menuitem value="Validation" url="validation.jsf"/>
+			</p:steps>
+
+		</h:form>
+		 <p:fieldset legend="Moyen de paiement" styleClass="moyens_paiement bloc_centre">
+			<h:form class="bloc_centre">
+				<h3>Choisir un moyen de paiement</h3>
+				<p:selectOneRadio id="moyenPaiementRadio" value="Carte Bleue" layout="custom" required="true">
+					<f:selectItem itemLabel="Carte Bleue" itemValue="Carte Bleue" />
+					<f:selectItem itemLabel="Paypal" itemValue="0"/>
+					<f:selectItem itemLabel="Chèque" itemValue="0"/>
+					<f:selectItem itemLabel="Virement" itemValue="0"/>
+				</p:selectOneRadio>
+				
+				<h:panelGrid columns="2" cellpadding="4" class="moyenPaiementPanel">
+			        	<p:radioButton id="opt1" for="moyenPaiementRadio" itemIndex="0"  />
+						<h:outputLabel for="opt1" value="Carte Bleue" />
+						
+			            <p:radioButton id="opt2" for="moyenPaiementRadio" itemIndex="1" />
+			            <h:outputLabel for="opt2" value="Paypal" />
+			 
+						<p:radioButton id="opt3" for="moyenPaiementRadio" itemIndex="2" />
+			            <h:outputLabel for="opt3" value="Chèque" />
+			 
+			            <p:radioButton id="opt4" for="moyenPaiementRadio" itemIndex="3" />
+			            <h:outputLabel for="opt4" value="Virement" />
+			    </h:panelGrid>
+				<p:commandButton class="moyenPaiementButton" value="Validation de la commande" action="#{panierBean.ajouterCommande(adresseBean.adresse, utilisateurBean.utilisateur)}"/>
+			</h:form>
+		</p:fieldset>
+	</ui:define>
+</ui:composition>
+</html>

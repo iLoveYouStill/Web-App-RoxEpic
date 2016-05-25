@@ -1,0 +1,351 @@
+-- phpMyAdmin SQL Dump
+-- version 4.1.14
+-- http://www.phpmyadmin.net
+--
+-- Client :  127.0.0.1
+-- Généré le :  Mer 30 Mars 2016 à 16:17
+-- Version du serveur :  5.6.17
+-- Version de PHP :  5.5.12
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+
+--
+-- Base de données :  `catalogue`
+--
+
+--
+-- Contenu de la table `categorie`
+--
+
+INSERT INTO `categorie` (`id_categorie`, `libelle`) VALUES
+(2, 'Accessoires'),
+(4, 'Cables'),
+(7, 'Courroies'),
+(45, 'Divers'),
+(3, 'Eclairages'),
+(8, 'Electronique'),
+(6, 'Filtres'),
+(1, 'Joints'),
+(5, 'Moteurs');
+
+--
+-- Contenu de la table `marque`
+--
+
+INSERT INTO `marque` (`id_marque`, `libelle`) VALUES
+(1, 'ARISTON'),
+(2, 'BRANDT'),
+(3, 'ELECTROLUX'),
+(4, 'FAGOR'),
+(5, 'FAURE'),
+(6, 'INDESIT'),
+(7, 'LADEN'),
+(8, 'MOULINEX'),
+(9, 'PHILIPS'),
+(10, 'SEB'),
+(11, 'WHIRLPOOL');
+
+--
+-- Contenu de la table `type`
+--
+
+INSERT INTO `type` (`id_type`, `libelle`) VALUES
+(6, 'Aspirateur'),
+(8, 'Cafetiere'),
+(3, 'Four'),
+(1, 'Lave linge'),
+(4, 'Lave vaisselle'),
+(5, 'Micro-ondes'),
+(2, 'Refrigerateur'),
+(7, 'Television');
+
+--
+-- Contenu de la table `modele`
+--
+
+INSERT INTO `modele` (`id_modele`, `id_type`, `id_marque`, `libelle`) VALUES
+(1, 1, 1, '27867'),
+(2, 1, 1, '1000XWD'),
+(3, 1, 2, '1000PAE.EF'),
+(4, 2, 2, '5163'),
+(5, 2, 3, '2F.2609P'),
+(6, 2, 3, '74.62W1'),
+(7, 3, 4, '4003.0'),
+(8, 3, 4, '29560'),
+(9, 3, 5, '4450'),
+(10, 4, 5, '1FCC33'),
+(11, 4, 6, '52.48.1'),
+(12, 4, 6, '1SF6'),
+(13, 5, 7, '4058.2'),
+(14, 5, 7, '4300EB'),
+(15, 5, 8, '847'),
+(16, 6, 8, '2882MP'),
+(17, 6, 9, '52.25.1'),
+(18, 7, 9, '3FSC.19XL.1'),
+(19, 7, 10, '4023.9'),
+(20, 8, 10, '1488'),
+(21, 8, 11, '5CFB.120X'),
+(22, 8, 11, '604D23');
+
+--
+-- Contenu de la table `piece`
+--
+
+INSERT INTO `piece` (`id_piece`, `id_piece_origine`, `id_categorie`, `reference`, `libelle`, `prix`, `stock`) VALUES
+(1, NULL, 1, 'JOI-01', 'Joint 8MM', '10.00', 1),
+(2, 1, 1, 'JOI-01', 'Joint 8MM générique', '8.00', 1),
+(3, NULL, 1, 'JOI-02', 'Joint 10MM', '12.00', 1),
+(4, 3, 1, 'JOI-02', 'Joint 10MM générique', '9.00', 1),
+(5, NULL, 1, 'JOI-03', 'Joint 12MM', '14.00', 1),
+(6, 5, 1, 'JOI-03', 'Joint 12MM générique', '12.00', 1),
+(7, NULL, 1, 'JOI-04', 'Joint 14MM', '15.00', 1),
+(8, 7, 1, 'JOI-04', 'Joint 14MM générique', '13.00', 1),
+(9, NULL, 1, 'JOI-05', 'Joint 16MM', '17.00', 1),
+(10, 9, 1, 'JOI-05', 'Joint 16MM générique', '15.00', 1),
+(11, NULL, 2, 'BOU-01', 'Bouton', '5.00', 1),
+(12, 11, 2, 'BOU-01', 'Bouton générique', '3.00', 1),
+(13, NULL, 2, 'POI-01', 'Poignet', '8.00', 1),
+(14, 13, 2, 'POI-01', 'Poignet générique', '6.00', 1),
+(15, NULL, 2, 'POR-01', 'Porte', '20.00', 1),
+(16, 15, 2, 'POR-01', 'Porte générique', '18.00', 1),
+(17, NULL, 2, 'FLE-01', 'Flexible', '9.00', 1),
+(18, 17, 2, 'FLE-01', 'Flexible générique', '7.00', 1),
+(19, NULL, 2, 'TUY-01', 'Tuyau', '11.00', 1),
+(20, 19, 2, 'TUY-01', 'Tuyau générique', '8.00', 1),
+(21, NULL, 3, 'AMP-01', 'Ampoule 10W', '4.00', 1),
+(22, 21, 3, 'AMP-01', 'Ampoule 10W générique', '3.00', 1),
+(23, NULL, 3, 'AMP-02', 'Ampoule 20W', '5.00', 1),
+(24, 23, 3, 'AMP-02', 'Ampoule 20W générique', '4.00', 1),
+(25, NULL, 3, 'AMP-03', 'Ampoule 30W', '6.00', 1),
+(26, 25, 3, 'AMP-03', 'Ampoule 30W générique', '5.00', 1),
+(27, NULL, 3, 'AMP-04', 'Ampoule 40W', '7.00', 1),
+(28, 27, 3, 'AMP-04', 'Ampoule 40W générique', '6.00', 1),
+(29, NULL, 3, 'AMP-05', 'Ampoule 50W', '8.00', 1),
+(30, 29, 3, 'AMP-05', 'Ampoule 50W générique', '7.00', 1),
+(31, NULL, 4, 'CAB-01', 'Cable dNULLalimentation', '5.00', 1),
+(32, 31, 4, 'CAB-01', 'Cable dNULLalimentation générique', '3.50', 1),
+(33, NULL, 4, 'KIT-01', 'Kit triphasé', '10.00', 1),
+(34, 33, 4, 'KIT-01', 'Kit triphasé générique', '9.00', 1),
+(35, NULL, 4, 'BOB-01', 'Bobine', '10.00', 1),
+(36, 35, 4, 'BOB-01', 'Bobine générique', '8.50', 1),
+(37, NULL, 4, 'CAB-02', 'Fil de terre', '3.00', 1),
+(38, 37, 4, 'CAB-02', 'Fil de terre générique', '2.50', 1),
+(39, NULL, 5, 'MOT-01', 'Moteur induction', '90.00', 1),
+(40, 39, 5, 'MOT-01', 'Moteur induction générique', '70.00', 1),
+(41, NULL, 5, 'MOT-02', 'Moteur air pulsé', '85.00', 1),
+(42, 41, 5, 'MOT-02', 'Moteur air pulsé générique', '69.00', 1),
+(43, NULL, 5, 'MOT-03', 'Moteur aspirateur', '50.00', 1),
+(44, 43, 5, 'MOT-03', 'Moteur aspirateur générique', '45.00', 1),
+(45, NULL, 6, 'FIL-01', 'Filtre réfrigérateur ventilé', '10.00', 1),
+(46, 45, 6, 'FIL-01', 'Filtre réfrigérateur ventilé générique', '8.00', 1),
+(47, NULL, 6, 'FIL-02', 'Filtre anti-calcaire', '10.00', 1),
+(48, 47, 6, 'FIL-02', 'Filtre anti-calcaire générique', '8.00', 1),
+(49, NULL, 6, 'FIL-03', 'Filtre aspirateur', '10.00', 1),
+(50, 49, 6, 'FIL-03', 'Filtre aspirateur générique', '8.00', 1),
+(51, NULL, 6, 'FIL-04', 'Filtre cafetière', '8.00', 1),
+(52, 51, 6, 'FIL-04', 'Filtre cafetière générique', '6.00', 1),
+(53, NULL, 7, 'COU-01', 'Courroie MaL 30cm', '30.00', 1),
+(54, 53, 7, 'COU-01', 'Courroie MaL 30cm générique', '25.00', 1),
+(55, NULL, 7, 'COU-02', 'Courroie MaL 20cm', '25.00', 1),
+(56, 55, 7, 'COU-02', 'Courroie MaL 20cm générique', '20.00', 1),
+(57, NULL, 8, 'DAL-01', 'Dalle écran', '130.00', 1),
+(58, 57, 8, 'DAL-01', 'Dalle écran générique', '99.00', 1),
+(59, NULL, 8, 'CON-01', 'Condensateur', '7.50', 1),
+(60, 59, 8, 'CON-01', 'Condensateur générique', '5.00', 1);
+
+--
+-- Contenu de la table `compose`
+--
+
+INSERT INTO `compose` (`id_modele`, `id_piece`) VALUES
+(1, 1),
+(1, 11),
+(1, 15),
+(1, 21),
+(1, 37),
+(1, 45),
+(2, 1),
+(2, 11),
+(2, 15),
+(2, 37),
+(2, 45),
+(2, 53),
+(3, 1),
+(3, 10),
+(3, 16),
+(3, 38),
+(3, 46),
+(3, 54),
+(3, 58),
+(4, 10),
+(4, 12),
+(4, 20),
+(4, 30),
+(4, 36),
+(4, 56),
+(4, 58),
+(5, 10),
+(5, 12),
+(5, 20),
+(5, 30),
+(5, 36),
+(5, 58),
+(6, 10),
+(6, 12),
+(6, 20),
+(6, 30),
+(6, 36),
+(6, 58),
+(7, 8),
+(7, 10),
+(7, 14),
+(7, 26),
+(7, 32),
+(7, 36),
+(8, 8),
+(8, 10),
+(8, 14),
+(8, 26),
+(8, 32),
+(8, 36),
+(9, 8),
+(9, 10),
+(9, 14),
+(9, 26),
+(9, 32),
+(9, 36),
+(10, 4),
+(10, 10),
+(10, 14),
+(10, 16),
+(10, 30),
+(10, 58),
+(11, 4),
+(11, 10),
+(11, 14),
+(11, 16),
+(11, 30),
+(11, 58),
+(12, 4),
+(12, 10),
+(12, 14),
+(12, 16),
+(12, 30),
+(12, 40),
+(12, 58),
+(13, 6),
+(13, 10),
+(13, 12),
+(13, 18),
+(13, 24),
+(13, 30),
+(14, 6),
+(14, 10),
+(14, 12),
+(14, 18),
+(14, 24),
+(14, 30),
+(15, 6),
+(15, 10),
+(15, 12),
+(15, 18),
+(15, 24),
+(15, 30),
+(16, 1),
+(16, 10),
+(16, 34),
+(16, 42),
+(16, 48),
+(16, 58),
+(17, 1),
+(17, 10),
+(17, 34),
+(17, 42),
+(17, 48),
+(17, 58),
+(18, 30),
+(18, 56),
+(18, 58),
+(19, 30),
+(19, 56),
+(19, 58),
+(20, 2),
+(20, 10),
+(20, 30),
+(20, 50),
+(21, 2),
+(21, 10),
+(21, 30),
+(21, 50),
+(22, 2),
+(22, 10),
+(22, 30),
+(22, 50);
+
+--
+-- Contenu de la table `document`
+--
+
+/*INSERT INTO `document` (`id_document`, `id_piece`, `id_modele`, `libelle`, `chemin`) VALUES
+(1, 1, NULL, 'Notice Joint', 'http://www.doc.fr/joint.pdf'),
+(2, 3, NULL, 'Notice Joint', 'http://www.doc.fr/joint.pdf'),
+(3, 5, NULL, 'Notice Joint', 'http://www.doc.fr/joint.pdf'),
+(4, 7, NULL, 'Notice Joint', 'http://www.doc.fr/joint.pdf'),
+(5, 9, NULL, 'Notice Joint', 'http://www.doc.fr/joint.pdf'),
+(6, 11, NULL, 'Notice Bouton', 'http://www.doc.fr/bouton.pdf'),
+(7, 13, NULL, 'Notice Poignet', 'http://www.doc.fr/poignet.pdf'),
+(8, 15, NULL, 'Notice Porte', 'http://www.doc.fr/porte.pdf'),
+(9, 17, NULL, 'Notice Flexible', 'http://www.doc.fr/flexible.pdf'),
+(10, 19, NULL, 'Notice Tuyau', 'http://www.doc.fr/tuyau.pdf'),
+(11, 21, NULL, 'Notice Ampoule', 'http://www.doc.fr/ampoule.pdf'),
+(12, 23, NULL, 'Notice Ampoule', 'http://www.doc.fr/ampoule.pdf'),
+(13, 25, NULL, 'Notice Ampoule', 'http://www.doc.fr/ampoule.pdf'),
+(14, 27, NULL, 'Notice Ampoule', 'http://www.doc.fr/ampoule.pdf'),
+(15, 29, NULL, 'Notice Ampoule', 'http://www.doc.fr/ampoule.pdf'),
+(16, 31, NULL, 'Notice Câble', 'http://www.doc.fr/cable.pdf'),
+(17, 33, NULL, 'Notice Kit triphasé', 'http://www.doc.fr/kit_tiphase.pdf'),
+(18, 35, NULL, 'Notice Bobine', 'http://www.doc.fr/bobine.pdf'),
+(19, 39, NULL, 'Notice Moteur Induction', 'http://www.doc.fr/moteur_induction.pdf'),
+(20, 41, NULL, 'Notice Moteur Réfrigérateur', 'http://www.doc.fr/moteur_refrigerateur.pdf'),
+(21, 43, NULL, 'Notice Moteur Aspirateur', 'http://www.doc.fr/moteur_aspirateur.pdf'),
+(22, 45, NULL, 'Notice Filtre Réfrigérateur', 'http://www.doc.fr/filtre_refrigerateur.pdf'),
+(23, 47, NULL, 'Notice Filtre anti-calcaire', 'http://www.doc.fr/filtre_aspirateur.pdf'),
+(24, 49, NULL, 'Notice Filtre aspirateur', 'http://www.doc.fr/filtre_aspirateur.pdf'),
+(25, 51, NULL, 'Notice Filtre Cafetière', 'http://www.doc.fr/filtre_cafetiere.pdf'),
+(26, 53, NULL, 'Notice Courroie 30cm', 'http://www.doc.fr/courroie_30cm.pdf'),
+(27, 55, NULL, 'Notice Courroie 20cm', 'http://www.doc.fr/courroie_20cm.pdf'),
+(28, 57, NULL, 'Notice Dalle', 'http://www.doc.fr/dalle.pdf'),
+(29, 59, NULL, 'Notice Condensateur', 'http://www.doc.fr/condesateur.pdf'),
+(30, NULL, 1, 'Notice 27867', 'http://www.doc.fr/27867.pdf'),
+(31, NULL, 2, 'Notice 1000XWD', 'http://www.doc.fr/1000XWD.pdf'),
+(32, NULL, 3, 'Notice 1000PAE.EF', 'http://www.doc.fr/1000PAE_EF.pdf'),
+(33, NULL, 4, 'Notice 5163', 'http://www.doc.fr/5163.pdf'),
+(34, NULL, 5, 'Notice 2F.2609P', 'http://www.doc.fr/2F_2609P.pdf'),
+(35, NULL, 6, 'Notice 74.62W1', 'http://www.doc.fr/74_62W1.pdf'),
+(36, NULL, 7, 'Notice 4003', 'http://www.doc.fr/4003.pdf'),
+(37, NULL, 8, 'Notice 29560', 'http://www.doc.fr/29560.pdf'),
+(38, NULL, 9, 'Notice 4450', 'http://www.doc.fr/4450.pdf'),
+(39, NULL, 10, 'Notice 1FCC33', 'http://www.doc.fr/1FCC33.pdf'),
+(40, NULL, 11, 'Notice 52.48.1', 'http://www.doc.fr/52_48_1.pdf'),
+(41, NULL, 12, 'Notice 1SF6', 'http://www.doc.fr/1SF6.pdf'),
+(42, NULL, 13, 'Notice 4058.2', 'http://www.doc.fr/4058_2.pdf'),
+(43, NULL, 14, 'Notice 4300EB', 'http://www.doc.fr/4300_EB.pdf'),
+(44, NULL, 15, 'Notice 847', 'http://www.doc.fr/847.pdf'),
+(45, NULL, 16, 'Notice 2882MP', 'http://www.doc.fr/2882MP.pdf'),
+(46, NULL, 17, 'Notice 52.25.1', 'http://www.doc.fr/52_25_1.pdf'),
+(47, NULL, 18, 'Notice 3FSC.19XL', 'http://www.doc.fr/3FSC_19XL.pdf'),
+(48, NULL, 19, 'Notice 4023.9', 'http://www.doc.fr/4023_9.pdf'),
+(49, NULL, 20, 'Notice 1488', 'http://www.doc.fr/1488.pdf'),
+(50, NULL, 21, 'Notice 5CFB.120X', 'http://www.doc.fr/5CFB_120X.pdf'),
+(51, NULL, 22, 'Notice 604D23', 'http://www.doc.fr/604D23.pdf');*/
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

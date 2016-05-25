@@ -1,0 +1,75 @@
+package domain.dao;
+
+import java.util.List;
+
+import javax.ejb.EJBException;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+
+import domain.catalogue.Categorie;
+import domain.catalogue.Modele;
+import domain.catalogue.Piece;
+
+public class PieceDAO implements PieceLocal {
+	
+	@PersistenceContext(unitName="RoxEpic")
+	EntityManager em;
+
+	@Override
+	public Piece insert(Piece piece) throws EJBException {
+		em.persist(piece);
+		return piece;
+	}
+
+	@Override
+	public Piece associe(Piece piOrigine, Modele mo) throws EJBException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void update(Piece piece) throws Exception {
+		em.merge(piece);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Piece> getOriginalesBy(Modele mo, Categorie ca) {
+		List<Piece> lp;
+		Query query = em.createQuery("SELECT p, c FROM Piece p, Compose c WHERE p.id_categorie=:param1 AND c.lm_id_modele=:param2 AND c.lp_id_piece=p.id_piece AND id_piece_origine IS NULL");
+		query.setParameter("param1", ca.getId());
+		query.setParameter("param2", mo.getId());
+		lp=(List<Piece>)query.getResultList();
+		return lp;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Piece> getEquivalentesBy(Modele mo, Categorie ca) {
+		List<Piece> lp;
+		Query query;
+		
+		if(ca == null)
+			query = em.createQuery("SELECT p FROM Piece p WHERE p.id_piece_origine IN (SELECT p, c FROM Piece p, Compose c WHERE c.lm_id_modele=:param2 AND c.lp_id_piece=p.id_piece)");
+		else {
+			query = em.createQuery("SELECT p FROM Piece p WHERE p.id_piece_origine IN (SELECT p, c FROM Piece p, Compose c WHERE p.id_categorie=:param1 AND c.lm_id_modele=:param2 AND c.lp_id_piece=p.id_piece)");
+			query.setParameter("param1", ca.getId());	
+		}	
+		
+		query.setParameter("param2", mo.getId());
+		lp=(List<Piece>)query.getResultList();
+		return lp;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Piece> getByCat(Categorie ca) {
+		List<Piece> lp;
+		Query q= em.createQuery("SELECT p FROM Piece p WHERE p.id_categorie=:param1");
+		q.setParameter("param1", ca.getId());
+		lp=(List<Piece>)q.getResultList();
+		return lp;
+	}
+
+}

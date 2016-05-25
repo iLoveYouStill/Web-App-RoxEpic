@@ -1,0 +1,141 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition template="templates/templatecommon.xhtml">
+	<ui:define name="titre">Recherche</ui:define>
+	
+	<ui:define name="content">
+		<h:outputText class="titre_utilisateur" value="Informations de Compte"/><br/><br/>
+		
+				 	<h:form id="add_util">
+				 		<div class="inline_block">
+				 			<h:outputText class="titre_utilisateur" value="Utilisateur"/><br/><br/>			 	
+								<h:panelGrid columns="3" cellpadding="5">	
+								
+									<h:outputText value="Nom"/>										
+									<p:inputText id="nom" value="#{utilisateurBean.nom}" required="true" 
+									requiredMessage="Veuillez renseigner votre nom" validatorMessage="Nom invalide" label="Nom">						
+										<f:validateLength minimum="3" maximum="20"/>
+										<f:validateRegex pattern="([A-Za-zzéèêïëî -]*)"/>
+										<p:ajax update="messNom" event="keyup" />			
+									</p:inputText>
+									<p:message id="messNom" for="nom" errorStyle="color:blue" />
+									
+									<h:outputText value="Prénom"/>
+									<p:inputText id="prenom" value="#{utilisateurBean.prenom}" required="true"
+									requiredMessage="Veuillez renseigner votre prénom" validatorMessage="Prénom invalide" label="Prénom">						
+										<f:validateLength minimum="3" maximum="20"/>
+										<f:validateRegex pattern="([A-Za-zzéèêïëî -]*)"/>
+										<p:ajax update="messPrenom" event="keyup" />			
+									</p:inputText>
+									<p:message id="messPrenom" for="prenom" errorStyle="color:blue" />
+									
+									<h:outputText value="Mot de passe"/>
+									<p:password id="motDePasse" value="#{utilisateurBean.motDePasse}" required="true"
+									requiredMessage="Veuillez renseigner votre mot de passe" validatorMessage="Mot de passe invalide" label="Mot de passe">						
+										<f:validateLength minimum="3" maximum="20"/>
+										<f:validateRegex pattern="([A-Za-z0-9zéèêïëî -]*)"/>
+										<p:ajax update="messPass" event="keyup" />			
+									</p:password>
+									<p:message id="messPass" for="motDePasse" errorStyle="color:blue" />
+									
+									<h:outputText value="E-mail"/>
+									<p:inputText id="email" value="#{utilisateurBean.email}" required="true"
+									requiredMessage="Veuillez renseigner votre e-mail" validatorMessage="E-mail invalide" label="E-mail">						
+										<f:validateLength minimum="3" maximum="30"/>
+										<f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"/>
+										<p:ajax update="messEmail" event="keyup" />			
+									</p:inputText>
+									<p:message id="messEmail" for="email" errorStyle="color:blue" />
+									
+									<h:outputText value="Téléphone"/>
+									<p:inputText id="telephone" value="#{utilisateurBean.telephone}" required="true"
+									requiredMessage="Veuillez renseigner votre téléphone" validatorMessage="Numéro invalide" label="Téléphone">						
+										<f:validateLength minimum="9" maximum="10"/>
+										<!-- <f:validateRegex pattern="[0-9]*"/> -->
+										<p:ajax update="messTel" event="keyup" />			
+									</p:inputText>
+									<p:message id="messTel" for="telephone" errorStyle="color:blue" />
+																						
+								</h:panelGrid>
+						</div>
+						
+						<div class="inline_block">
+							<h:outputText class="titre_utilisateur" value="Adresse"/><br/><br/>
+								<h:panelGrid columns="3" cellpadding="5">
+								
+									<h:outputText value="Libellé de l'adresse"/>
+									<p:inputText id="libelle" value="#{adresseBean.libelle}" required="true"
+									requiredMessage="Veuillez renseigner l'intitulé de l'adresse. Exemple : Maison" validatorMessage="Libellé invalide" label="Libellé de l'adresse">						
+										<f:validateLength minimum="3" maximum="20"/>
+										<f:validateRegex pattern="([A-Za-z0-9éèêïëî -]*)"/>
+										<p:ajax update="messLib" event="keyup" />			
+									</p:inputText>
+									<p:message id="messLib" for="libelle" errorStyle="color:blue" />
+									
+									<h:outputText value="N° et nom de rue"/>
+									<p:inputText id="rue" value="#{adresseBean.rue}" required="true" 
+									requiredMessage="Veuillez renseigner le numéro du domicile et le nom de la rue"  validatorMessage="N° et nom de rue invalides" label="N° et nom de rue">						
+										<f:validateLength minimum="3" maximum="20"/>
+										<f:validateRegex pattern="([0-9]+[A-Za-zéèêïëî -]*)"/>
+										<p:ajax update="messRue" event="keyup" />			
+									</p:inputText>
+									<p:message id="messRue" for="rue" errorStyle="color:blue" />
+									
+									<h:outputText value="Complément d'adresse"/>
+									<p:inputText id="complement" value="#{adresseBean.complement}" required="true" 
+									requiredMessage="Veuillez renseigner votre complément d'adresse" validatorMessage="Complément d'adresse invalide" label="Complément d'adresse">						
+										<f:validateLength minimum="1" maximum="20"/>
+										<f:validateRegex pattern="([A-Za-zéèêïëî -]*)"/>
+										<p:ajax update="messComp" event="keyup" />			
+									</p:inputText>
+									<p:message id="messComp" for="complement" errorStyle="color:blue" />
+									
+									<h:outputText value="Code Postal"/>
+									<p:inputText id="codePostal" value="#{adresseBean.codePostal}" required="true"
+									 requiredMessage="Veuillez renseigner votre code postal" validatorMessage="Code postal invalide" label="Code Postal">						
+										<f:validateLength minimum="4" maximum="5"/>
+										<!-- <f:validateRegex pattern="[0-9]*"/> -->
+										<p:ajax update="messCoPo" event="keyup" />			
+									</p:inputText>
+									<p:message id="messCoPo" for="codePostal" errorStyle="color:blue" />
+									
+									<h:outputText value="Ville"/>
+									<p:inputText id="ville" value="#{adresseBean.ville}" required="true" 
+									requiredMessage="Veuillez renseigner votre ville" validatorMessage="Ville invalide" label="Ville">						
+										<f:validateLength minimum="3" maximum="20"/>
+										<f:validateRegex pattern="([A-Za-zéèêïëî -]*)"/>
+										<p:ajax update="messVil" event="keyup" />			
+									</p:inputText>
+									<p:message id="messVil" for="ville" errorStyle="color:blue" />
+									
+									<h:outputText value="Pays"/>
+									<p:inputText id="pays" value="#{adresseBean.pays}" required="true" 
+									requiredMessage="Veuillez renseigner votre pays" validatorMessage="Pays invalide" label="Pays">						
+										<f:validateLength minimum="3" maximum="20"/>
+										<f:validateRegex pattern="([A-Za-zéèêïëî -]*)"/>
+										<p:ajax update="messPay" event="keyup" />			
+									</p:inputText>
+									<p:message id="messPay" for="pays" errorStyle="color:blue" />
+									    								
+							</h:panelGrid>
+						</div>
+										
+						<p:commandButton rendered="#{utilisateurBean.pageDep == 1}" actionListener="#{utilisateurBean.save}" action="#{utilisateurBean.ajouter(1)}" 
+						value="Créer mon compte !" update="add_util" icon="ui-icon-check"/>											
+						
+						<p:commandButton rendered="#{utilisateurBean.pageDep == 2}" actionListener="#{utilisateurBean.save}" action="#{utilisateurBean.ajouter(2)}" 
+						value="Créer mon compte via tunnel 2 !" />					
+						<p:messages/>
+															
+				 	</h:form>			
+         		  		    
+	</ui:define>
+</ui:composition>
+</html>

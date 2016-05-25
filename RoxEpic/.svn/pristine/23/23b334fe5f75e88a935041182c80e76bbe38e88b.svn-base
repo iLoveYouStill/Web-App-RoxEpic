@@ -1,0 +1,144 @@
+package domain.catalogue;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
+
+
+@Entity
+public class Piece implements Serializable {
+
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8903250504109943911L;
+	
+	/*Données membres*/
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="id_piece")
+	private int id;
+	
+	@Column(name="libelle", nullable=false, unique=true, length=50)
+    private String libelle;
+	
+	@Column(name="reference", nullable=false, length=50)
+    private String reference;
+	
+	@Column(name="prix", nullable=false, length=50)
+    private double prix;
+	
+	@Column(name="stock", nullable=false, length=50)
+    private int stock;
+	
+	@ManyToOne
+	@JoinColumn(name = "id_piece_origine")
+    private Piece originale;
+	
+	@ManyToOne
+	@JoinColumn(name = "id_categorie")
+    private Categorie categorie;
+	
+	@Transient
+    private List<Piece> equivalente = new ArrayList<Piece> ();
+	
+	@ManyToMany(mappedBy="lp")
+    private Set<Modele> lm  = new HashSet<Modele> ();
+
+	public Piece(String libelle, String reference, double prix, int stock,
+			Piece originale, Categorie categorie, List<Piece> equivalente) {
+		this.libelle = libelle;
+		this.reference = reference;
+		this.prix = prix;
+		this.stock = stock;
+		this.originale = originale;
+		this.categorie = categorie;
+		this.equivalente = equivalente;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public String getLibelle() {
+		return libelle;
+	}
+
+	public void setLibelle(String libelle) {
+		this.libelle = libelle;
+	}
+
+	public String getReference() {
+		return reference;
+	}
+
+	public void setReference(String reference) {
+		this.reference = reference;
+	}
+
+	public double getPrix() {
+		return prix;
+	}
+
+	public void setPrix(double prix) {
+		this.prix = prix;
+	}
+
+	public int getStock() {
+		return stock;
+	}
+
+	public void setStock(int stock) {
+		this.stock = stock;
+	}
+
+	public Piece getOriginale() {
+		return originale;
+	}
+
+	public void setOriginale(Piece originale) {
+		this.originale = originale;
+	}
+
+	public Categorie getCategorie() {
+		return categorie;
+	}
+
+	public void setCategorie(Categorie categorie) {
+		this.categorie = categorie;
+	}
+
+	public List<Piece> getEquivalente() {
+		return equivalente;
+	}
+
+	public void setEquivalente(List<Piece> equivalente) {
+		this.equivalente = equivalente;
+	}
+	
+	public Set<Modele> getLm() {
+		return lm;
+	}
+
+	public void setLm(Set<Modele> lm) {
+		this.lm = lm;
+	}
+
+	@Override
+	public String toString() {
+		return libelle;
+	}
+}
