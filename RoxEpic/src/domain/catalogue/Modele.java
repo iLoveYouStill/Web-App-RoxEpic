@@ -1,0 +1,125 @@
+package domain.catalogue;
+
+import java.io.Serializable;
+
+import javax.persistence.*;
+
+@Entity
+@Table(name="modele")
+public class Modele implements Serializable {
+   
+ 
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4717649725126257344L;
+
+	/*Données membres*/
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="id_modele")
+	private int idModele;
+    
+	@Column(name="libelle", nullable=false, unique=true, length=50)
+    private String libelle;
+   
+	@ManyToOne
+	@JoinColumn(name = "id_marque", nullable=false)
+    private Marque marque;
+    
+	@ManyToOne
+	@JoinColumn(name = "id_type", nullable=false)
+    private Type type;
+   
+	/*@ManyToMany(fetch=FetchType.EAGER)
+    @JoinTable(name="compose", joinColumns=@JoinColumn(name="id_modele"), inverseJoinColumns=@JoinColumn(name="id_piece"))
+    private Set<Piece> pieces  = new HashSet<Piece> ();*/
+    
+	
+    /*Constructeurs*/
+    
+    public Modele() {
+		
+	}
+    
+    public Modele(String libelle, Marque marque, Type type){
+    	this.libelle=libelle;
+    	this.marque=marque;
+    	this.type=type;
+    }
+    
+    
+    /*Getteurs*/
+
+	public int getIdModele() {
+		return idModele;
+	}
+	
+	public String getLibelle() {
+		return libelle;
+	}
+
+	public Marque getMarque() {
+		return marque;
+	}
+	
+	public Type getType() {
+		return type;
+	}
+	
+	/*public Set<Piece> getPieces() {
+		return pieces;
+	}*/
+	
+	
+	/*Setteurs*/
+
+	public void setId(int idModele) {
+		this.idModele = idModele;
+	}	
+	
+	public void setLibelle(String libelle) {
+		this.libelle = libelle;
+	}
+
+	public void setMarque(Marque marque) {
+		this.marque = marque;
+	}
+
+	public void setType(Type type) {
+		this.type = type;
+	}
+
+	/*public void setPieces(Set<Piece> pieces) {
+		this.pieces = pieces;
+	}*/
+
+	@Override
+	public String toString() {
+		return libelle;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + idModele;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Modele other = (Modele) obj;
+		if (idModele != other.idModele)
+			return false;
+		return true;
+	}  
+}

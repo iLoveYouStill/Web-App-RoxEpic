@@ -1,0 +1,16 @@
+package domain.dao;
+
+import javax.ejb.EJBException;
+import javax.ejb.Local;
+
+import domain.client.Adresse;
+
+
+@Local
+public interface AdresseLocal {
+	
+	public abstract Adresse insert(Adresse a) throws EJBException;
+	public abstract void deleteAdresse (Adresse a) throws Exception;
+	public abstract Adresse getById (int adresseId) throws Exception;
+	public abstract void modifierAdresse(Adresse a) throws Exception;
+}
